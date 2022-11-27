@@ -1,0 +1,28 @@
+export const links = [
+  { title: '在线商城', link: 'https://www.smartisan.com/' },
+  { title: 'Smartisan T1', link: 'https://www.smartisan.com/t1' },
+  { title: 'Smartisan T2', link: 'https://www.smartisan.com/t2' },
+  { title: '坚果', link: 'https://www.smartisan.com/jianguo' },
+  { title: 'M1/M1L', link: 'https://www.smartisan.com/m1' },
+  { title: '坚果Pro', link: 'https://www.smartisan.com/jianguopro' },
+  { title: '坚果Pro2', link: 'https://www.smartisan.com/jainguopro2' },
+  { title: '坚果Pro2s', link: 'https://www.smartisan.com/jainguopro2s' },
+  { title: '坚果3', link: 'https://www.smartisan.com/u3' },
+  // { title: '坚果R1', link: 'https://www.smartisan.com/r1' },
+  // { title: '坚果Pro3', link: 'https://www.smartisan.com/jianguopro3' },
+  // { title: '坚果R2', link: 'https://www.smartisan.com/r2' },
+  // { title: 'Smartisan TNT', link: 'https://www.smartisan.com/tnt' },
+  // { title: 'Smartisan TNT go', link: 'https://www.smartisan.com/tnt-go' },
+  // { title: 'Smartisan OS-3', link: 'https://www.smartisan.com/os/#/os-3' },
+  // { title: 'Smartisan OS-3.6', link: 'https://www.smartisan.com/os/#/3-6' },
+  // { title: 'Smartisan OS-6.x', link: 'https://www.smartisan.com/os/#/6-x' },
+  {
+    title: '应用',
+    link: 'https://www.smartisan.com/apps',
+    extra: {
+      title: '下载锤子商城 APP',
+      tip: '领新人专享大礼包',
+      image: 'https://static.smartisanos.cn/index/assets/images/qrcode-douyin.60656a7f521942c6c29115a97648de1d.png',
+    },
+  },
+];

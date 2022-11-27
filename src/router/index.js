@@ -1,11 +1,25 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import demoRouters from './modules/demo';
+import mall from './modules/mall';
+import product from './modules/product';
+
+const routes = [
+  {
+    path: '/',
+    name: 'smartisan',
+    meta: { title: 'Smartisan' },
+    component: () => import('@/layouts/index.vue'),
+    children: [...mall, ...product],
+    // redirect: '/mall',
+  },
+  {
+    path: '*',
+    redirect: '/',
+  },
+];
 
 Vue.use(VueRouter);
-
-const routes = [...demoRouters];
 
 const router = new VueRouter({
   mode: 'history',

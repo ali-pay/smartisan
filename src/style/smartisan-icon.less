@@ -1,0 +1,86 @@
+// 图标字体
+@font-face {
+  font-family: SmartisanIconFont;
+  font-style: normal;
+  font-weight: normal;
+  src: url('@/assets/fonts/SmartisanIconFont.eot');
+  src: url('@/assets/fonts/SmartisanIconFont.eot?#iefix') format('embedded-opentype'),
+    url('@/assets/fonts/SmartisanIconFont.woff') format('woff'),
+    url('@/assets/fonts/SmartisanIconFont.ttf') format('truetype'),
+    url('@/assets/fonts/SmartisanIconFont.svg#open_sansregular') format('svg');
+}
+
+// 字体样式
+.smartisan-icon {
+  display: inline-block;
+  font-family: SmartisanIconFont;
+  vertical-align: middle;
+
+  &.start-left::before {
+    content: 'A';
+  }
+
+  &.end-right::before {
+    content: 'B';
+  }
+
+  &.gt::before {
+    content: 'C';
+  }
+
+  &.sort::before {
+    content: 'D';
+  }
+
+  &.times::before {
+    content: 'E';
+  }
+
+  &.plus::before {
+    content: 'F';
+  }
+
+  &.minus::before {
+    content: 'G';
+  }
+
+  &.check::before {
+    content: 'H';
+  }
+
+  &.star::before {
+    content: 'I';
+  }
+
+  &.minus-circle::before {
+    content: 'J';
+  }
+
+  &.plus-circle::before {
+    content: 'K';
+  }
+
+  &.info-circle::before {
+    content: 'L';
+  }
+
+  &.info-play::before {
+    content: 'M';
+  }
+
+  &.info-question::before {
+    content: 'N';
+  }
+
+  &.chevron-up::before {
+    content: 'O';
+  }
+
+  &.chevron-down::before {
+    content: 'P';
+  }
+
+  &.caret-down::before {
+    content: 'Q';
+  }
+}

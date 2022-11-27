@@ -1,0 +1,203 @@
+<template>
+  <div class="sm-footer">
+    <div class="wrapper">
+      <div class="top">
+        <div class="left">
+          <ul v-for="(item, index) in service" :key="index">
+            <li class="title">{{ item.title }}</li>
+            <li v-for="(element, elementIndex) in item.links" :key="elementIndex">
+              <a v-if="!element.extra" :href="element.link">{{ element.title }}</a>
+              <a v-else @click.stop="openDialog(element.extra)">{{ element.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="right">
+          <p class="tel">{{ contactus.title }}</p>
+          <p v-for="(item, index) in contactus.tips" :key="index">{{ item }}</p>
+          <a class="help" :href="contactus.link">
+            <i class="smartisan-icon info-question"></i>
+            在线帮助
+          </a>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="private">
+          <ul>
+            <li v-for="(item, index) in copyright" :key="index">
+              <a target="_blank" :class="{ copyright: !item.link }" :href="item.link">{{ item.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div class="public">
+          <ul>
+            <li v-for="(item, index) in beian" :key="index">
+              <a target="_blank" :href="item.link">
+                <i v-if="item.icon" class="icon-police"></i>
+                {{ item.title }}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { service, contactus, copyright, beian } from '@/config/footer';
+
+export default {
+  name: 'SmFooter',
+  data() {
+    return {
+      service,
+      contactus,
+      copyright,
+      beian,
+      extra: null,
+      dialogVisible: false,
+    };
+  },
+  methods: {
+    openDialog(extra) {
+      this.extra = extra;
+      this.dialogVisible = true;
+    },
+  },
+};
+</script>
+
+<style lang="less" scoped>
+.sm-footer {
+  min-width: var(--width);
+  background: var(--color-hover);
+  border-top: var(--border);
+
+  a {
+    color: var(--font-color-1);
+
+    &:hover {
+      color: var(--color-blue);
+    }
+  }
+
+  .wrapper {
+    .top {
+      display: flex;
+      justify-content: space-between;
+      padding: 5rem 0 2rem;
+      border-bottom: var(--border);
+
+      .left {
+        display: flex;
+
+        ul {
+          min-width: 13rem;
+
+          li {
+            margin-bottom: 1rem;
+
+            &:last-child {
+              margin-bottom: 0;
+            }
+          }
+
+          .title {
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            color: var(--font-color-2);
+          }
+        }
+      }
+
+      .right {
+        text-align: right;
+
+        .tel {
+          margin-bottom: 1.5rem;
+          font-size: 1.5rem;
+          font-weight: 900;
+          color: var(--color-blue);
+        }
+
+        .help {
+          display: inline-block;
+          width: 10rem;
+          height: 2.5rem;
+          margin-top: 1rem;
+          font-weight: bold;
+          line-height: 2.5rem;
+          color: var(--color-blue);
+          text-align: center;
+          background: var(--color-linear);
+          border: var(--border);
+          border-radius: var(--radius);
+
+          &:hover {
+            background: var(--color-hover);
+          }
+
+          &:active {
+            background: var(--color-gray);
+          }
+
+          .smartisan-icon {
+            margin-top: -2px;
+            font-size: 1.3rem;
+            font-weight: normal;
+          }
+        }
+      }
+    }
+
+    .bottom {
+      padding: 2rem 0;
+
+      ul {
+        display: flex;
+
+        li {
+          padding-right: 1rem;
+          margin-right: 1rem;
+          border-right: var(--border);
+
+          &:last-child {
+            padding-right: 0;
+            margin-right: 0;
+            border-right: none;
+          }
+
+          .copyright {
+            font-family: SmartisanMaquette;
+            color: var(--font-color-0);
+            cursor: default;
+          }
+        }
+      }
+
+      .public {
+        margin-top: 1.2rem;
+
+        a {
+          display: flex;
+          color: var(--font-color-0);
+
+          &:hover {
+            color: var(--color-blue);
+          }
+        }
+
+        .icon-police {
+          width: 20px;
+          height: 20px;
+          margin-top: -5px;
+          margin-right: 5px;
+          background-image: url('@/assets/images/footer/icon-police.png');
+          background-repeat: no-repeat;
+          background-size: contain;
+        }
+      }
+    }
+  }
+}
+</style>
