@@ -29,7 +29,7 @@ export const service = [
         title: '官方微信',
         extra: {
           title: '官方微信',
-          tip: '打开微信，扫描下方的二维码即可',
+          tip: '打开微信，扫描上方的二维码即可',
           image:
             'https://static.smartisanos.cn/index/assets/images/qrcode-douyin1.93dd9ff98e26ba968d567ca9cb818c71.png',
         },

@@ -54,6 +54,8 @@ module.exports = {
     'at-rule-name-case': 'lower',
     // 指定缩进
     indentation: [2, { severity: 'warning' }],
+    // 以字符串导入
+    'import-notation': 'string',
   },
   ignoreFiles: ['**/*.js', '**/*.jsx', '**/*.tsx', '**/*.ts'],
   overrides: [

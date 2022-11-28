@@ -40,6 +40,12 @@
         </div>
       </div>
     </div>
+    <t-dialog :visible.sync="visible" :header="false" :footer="false">
+      <div class="qrcode">
+        <img :src="extra?.image" />
+        <p class="tip">{{ extra?.tip }}</p>
+      </div>
+    </t-dialog>
   </div>
 </template>
 
@@ -55,13 +61,14 @@ export default {
       copyright,
       beian,
       extra: null,
-      dialogVisible: false,
+      visible: false,
     };
   },
   methods: {
     openDialog(extra) {
+      console.log('extra:', extra);
       this.extra = extra;
-      this.dialogVisible = true;
+      this.visible = true;
     },
   },
 };
@@ -198,6 +205,21 @@ export default {
         }
       }
     }
+  }
+}
+
+.qrcode {
+  height: 25rem;
+  text-align: center;
+
+  img {
+    width: 20rem;
+    height: 20rem;
+  }
+
+  .tip {
+    font-size: var(--font-size-xxl);
+    font-weight: bold;
   }
 }
 </style>

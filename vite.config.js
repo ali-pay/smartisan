@@ -1,13 +1,13 @@
 import { resolve } from 'path';
 import { defineConfig, loadEnv } from 'vite';
-import vue2 from '@vitejs/plugin-vue2';
+import { createVuePlugin } from 'vite-plugin-vue2';
 
 export default ({ mode }) => {
   const { VITE_PORT, VITE_BASE_URL } = loadEnv(mode, process.cwd());
 
   return defineConfig({
     base: VITE_BASE_URL,
-    plugins: [vue2()],
+    plugins: [createVuePlugin()],
     resolve: {
       alias: {
         '@': resolve(__dirname, 'src'),

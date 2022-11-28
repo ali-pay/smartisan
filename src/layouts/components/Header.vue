@@ -5,7 +5,16 @@
       <ul>
         <li><a class="active" @click.stop="changeColor()">切换主题颜色</a></li>
         <li v-for="(item, index) in links" :key="index">
-          <a :href="item.link" :class="{ active: item.title === link }">{{ item.title }}</a>
+          <t-popup placement="bottom" show-arrow>
+            <a :href="item.link" :class="{ active: item.title === link }">{{ item.title }}</a>
+            <template v-if="item.extra" #content>
+              <div class="qrcode">
+                <p class="title">{{ item.extra.title }}</p>
+                <img :src="item.extra.image" />
+                <p class="tip">{{ item.extra.tip }}</p>
+              </div>
+            </template>
+          </t-popup>
         </li>
       </ul>
       <div class="menus">
@@ -251,6 +260,26 @@ export default {
         }
       }
     }
+  }
+}
+
+.qrcode {
+  padding: 1rem;
+  font-weight: bold;
+  text-align: center;
+
+  .title {
+    color: var(--font-color-2);
+  }
+
+  .tip {
+    color: var(--color-red);
+  }
+
+  img {
+    width: 8rem;
+    height: 8rem;
+    margin: 0.5rem;
   }
 }
 </style>
