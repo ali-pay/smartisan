@@ -1,5 +1,6 @@
 // html默认样式
 html {
+  // font-family: SmartisanMaquette;
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', SimSun, sans-serif;
   font-size: var(--font-size);
   font-weight: normal;
@@ -27,4 +28,24 @@ a {
   pointer-events: none;
   cursor: not-allowed;
   opacity: 0.4;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  width: 0;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-scrollbar);
+  background-clip: content-box;
+  border: 2px solid transparent;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-scrollbar-track);
 }

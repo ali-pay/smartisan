@@ -29,6 +29,7 @@
             </div>
           </div>
         </div>
+        <sm-header-cart />
       </div>
     </div>
   </div>
@@ -36,9 +37,13 @@
 
 <script>
 import { links } from '@/config/header';
+import SmHeaderCart from './HeaderCart.vue';
 
 export default {
   name: 'SmHeader',
+  components: {
+    SmHeaderCart,
+  },
   data() {
     return {
       links,
@@ -119,6 +124,7 @@ export default {
     }
 
     .menus {
+      position: relative;
       display: flex;
 
       .user {
