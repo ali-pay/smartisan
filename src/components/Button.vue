@@ -1,5 +1,5 @@
 <template>
-  <div class="sm-button" :class="classs" :style="styles" @click="handleClick">
+  <div class="sm-button" :class="cls" :style="sts" @click="handleClick">
     <span v-if="$slots.default">
       <slot></slot>
     </span>
@@ -11,14 +11,21 @@ export default {
   name: 'SmButton',
   props: {
     // 是否禁用按钮
-    disabled: Boolean,
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     // 是否显示阴影
-    shadow: Boolean,
+    shadow: {
+      type: Boolean,
+      default: false,
+    },
     // 按钮颜色
     color: {
       type: String,
       // 可选：default / gray / red / green / blue
       default: 'default',
+      validator: (val) => ['default', 'gray', 'red', 'green', 'blue'].includes(val),
     },
     // 按钮宽度
     width: {
@@ -37,24 +44,21 @@ export default {
     },
   },
   computed: {
-    classs() {
-      let { color } = this;
-      if (!['gray', 'red', 'green', 'blue'].includes(color)) color = 'default';
-      const css = [color];
-      if (this.disabled) css.push('disabled');
-      if (this.shadow) css.push('shadow');
-      return css;
+    cls() {
+      const temp = [this.color];
+      if (this.disabled) temp.push('disabled');
+      if (this.shadow) temp.push('shadow');
+      return temp;
     },
-    styles() {
-      const style = {};
-      if (this.width) style.width = `${this.width}px`;
-      if (this.height) style.height = `${this.height}px`;
-      if (this.size) style.fontSize = `${this.size}px`;
-      return style;
+    sts() {
+      const temp = {};
+      if (this.width) temp.width = `${this.width}px`;
+      if (this.height) temp.height = `${this.height}px`;
+      if (this.size) temp.fontSize = `${this.size}px`;
+      return temp;
     },
   },
   methods: {
-    // 按钮点击事件
     handleClick(evt) {
       this.$emit('click', evt);
     },

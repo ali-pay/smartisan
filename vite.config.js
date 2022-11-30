@@ -32,7 +32,7 @@ export default ({ mode }) => {
       // 监听所有地址
       host: '0.0.0.0',
       // 服务启动时是否自动打开浏览器
-      open: true,
+      open: false,
       // 允许跨域
       cors: true,
       // 自定义代理规则

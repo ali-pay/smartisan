@@ -134,6 +134,7 @@ export default {
 
     .menus {
       position: relative;
+      z-index: 2;
       display: flex;
 
       .user {

@@ -11,7 +11,7 @@ const routes = [
     meta: { title: 'Smartisan' },
     component: () => import('@/layouts/index.vue'),
     children: [...mall, ...product],
-    // redirect: '/mall',
+    redirect: '/mall',
   },
   {
     path: '*',

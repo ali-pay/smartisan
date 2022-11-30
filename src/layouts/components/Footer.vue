@@ -66,7 +66,6 @@ export default {
   },
   methods: {
     openDialog(extra) {
-      console.log('extra:', extra);
       this.extra = extra;
       this.visible = true;
     },
@@ -118,7 +117,9 @@ export default {
       }
 
       .right {
-        text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
 
         .tel {
           margin-bottom: 1.5rem;
@@ -128,14 +129,14 @@ export default {
         }
 
         .help {
-          display: inline-block;
-          width: 10rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           height: 2.5rem;
+          padding: 0 2rem;
           margin-top: 1rem;
           font-weight: bold;
-          line-height: 2.5rem;
           color: var(--color-blue);
-          text-align: center;
           background: var(--color-linear);
           border: var(--border);
           border-radius: var(--radius);
@@ -149,7 +150,7 @@ export default {
           }
 
           .smartisan-icon {
-            margin-top: -2px;
+            margin-right: 0.2rem;
             font-size: 1.3rem;
             font-weight: normal;
           }
