@@ -1,6 +1,6 @@
-import { phoneCaseAndroid } from '@/config/phone-case';
-import { earphoneBlack, earphoneRed, earphoneBlue } from '@/config/earphone';
-import { jianguo3Black464, jianguo3Red464, jianguo3Gold464 } from '@/config/jianguo3';
+import { android } from '@/config/phone-case';
+import { black, red, blue } from '@/config/earphone';
+import { black464, red464, gold464 } from '@/config/jianguo3';
 
 const state = {
   info: {
@@ -11,31 +11,31 @@ const state = {
   },
   cart: [
     {
-      sku: jianguo3Black464,
+      sku: black464,
       quantity: 1,
     },
     {
-      sku: jianguo3Red464,
+      sku: red464,
       quantity: 2,
     },
     {
-      sku: jianguo3Gold464,
+      sku: gold464,
       quantity: 3,
     },
     {
-      sku: earphoneBlack,
+      sku: black,
       quantity: 4,
     },
     {
-      sku: earphoneRed,
+      sku: red,
       quantity: 5,
     },
     {
-      sku: earphoneBlue,
+      sku: blue,
       quantity: 6,
     },
     {
-      sku: phoneCaseAndroid,
+      sku: android,
       quantity: 7,
     },
   ],

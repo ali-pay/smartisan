@@ -11,6 +11,7 @@ import '@/style/index.less';
 
 Vue.use(TDesign);
 Vue.use(SmComponents);
+
 new Vue({
   router,
   store,

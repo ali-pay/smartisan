@@ -2,9 +2,9 @@
   <div class="header" :class="themeColor">
     <div class="wrapper">
       <a class="logo" href="/"></a>
-      <ul>
-        <li><a class="active" @click.stop="changeColor()">切换主题颜色</a></li>
-        <li v-for="(item, index) in links" :key="index">
+      <ul class="links">
+        <li class="link"><a class="active" @click.stop="changeColor">切换主题颜色</a></li>
+        <li v-for="(item, index) in links" :key="index" class="link">
           <t-popup placement="bottom" show-arrow>
             <a :href="item.link" :class="{ active: item.title === link }">{{ item.title }}</a>
             <template v-if="item.extra" #content>
@@ -28,12 +28,12 @@
               </div>
               <p class="nickname">{{ user.nickname }}</p>
               <ul>
-                <li class="order"><a href="/user/order">我的订单</a></li>
-                <li class="support"><a href="/user/support">售后服务</a></li>
-                <li class="coupon"><a href="/user/coupon">我的优惠</a></li>
-                <li class="information"><a href="/user/information">账户资料</a></li>
-                <li class="address"><a href="user/address">收货地址</a></li>
-                <li class="logout"><a href="/user/logout">退出</a></li>
+                <li class="order"><t-icon name="bulletpoint" /><a href="/user/order">我的订单</a></li>
+                <li class="support"><t-icon name="chat" /><a href="/user/support">售后服务</a></li>
+                <li class="coupon"><t-icon name="discount" /><a href="/user/coupon">我的优惠</a></li>
+                <li class="information"><t-icon name="user" /><a href="/user/information">账户资料</a></li>
+                <li class="address"><t-icon name="location" /><a href="/user/address">收货地址</a></li>
+                <li class="logout"><t-icon name="close-circle" /><a href="/user/logout">退出</a></li>
               </ul>
             </div>
           </div>
@@ -104,17 +104,12 @@ export default {
       background-size: contain;
     }
 
-    ul {
+    .links {
       display: flex;
+      gap: 3rem;
       margin: 0 auto;
 
-      li {
-        margin-right: 3rem;
-
-        &:last-child {
-          margin-right: 0;
-        }
-
+      .link {
         a {
           font-size: var(--header-font-size);
           color: var(--header-font-color);
@@ -134,6 +129,7 @@ export default {
 
     .menus {
       position: relative;
+      // TODO 当剔除掉tdesign的轮播图时，需要修改z-index
       z-index: 2;
       display: flex;
 
@@ -160,11 +156,11 @@ export default {
           position: absolute;
           right: 0;
           display: none;
-          padding-top: 20px;
+          padding-top: 1.5rem;
         }
 
         .list {
-          width: 15rem;
+          width: 13rem;
           background: var(--color-white);
           border: var(--border);
           border-radius: var(--radius-xl);
@@ -202,59 +198,29 @@ export default {
             display: block;
 
             li {
+              display: flex;
+              gap: 0.5rem;
+              align-items: center;
               width: 100%;
-              height: 44px;
-              line-height: 44px;
+              height: 3.5rem;
+              padding-left: 3rem;
+              cursor: pointer;
+              border-top: var(--border-list);
 
-              a {
-                position: relative;
-                display: list-item;
-                padding-left: 55px;
-                color: var(--font-color-2);
-                border-top: var(--border-list);
-
-                &:hover {
-                  background-color: var(--color-hover);
-                }
-
-                &::before {
-                  position: absolute;
-                  top: 13px;
-                  left: 20px;
-                  width: 20px;
-                  height: 20px;
-                  content: '';
-                  background-image: url('@/assets/images/header/menus.png');
-                  background-repeat: no-repeat;
-                }
+              &:hover {
+                background-color: var(--color-hover);
               }
 
-              &:last-child a:hover {
+              &:last-child:hover {
                 border-radius: 0 0 var(--radius-xl) var(--radius-xl);
               }
 
-              &.order a::before {
-                background-position: 0 -43px;
+              .t-icon {
+                font-size: 1.3rem;
               }
 
-              &.support a::before {
-                background-position: -20px -43px;
-              }
-
-              &.coupon a::before {
-                background-position: -20px -83px;
-              }
-
-              &.information a::before {
-                background-position: 0 -63px;
-              }
-
-              &.address a::before {
-                background-position: -20px -63px;
-              }
-
-              &.logout a::before {
-                background-position: 0 -84px;
+              a {
+                color: var(--font-color-1);
               }
             }
           }

@@ -3,7 +3,8 @@
     <header>
       <sm-header />
     </header>
-    <router-view />
+    <router-view class="main" />
+    <sm-backtop />
     <footer>
       <sm-footer />
     </footer>
@@ -24,4 +25,13 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+// header {
+//   position: sticky;
+//   top: 0;
+//   z-index: 1;
+// }
+.main {
+  min-height: calc(100vh - var(--header-wrapper-height) - 278px);
+}
+</style>

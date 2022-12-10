@@ -17,10 +17,10 @@
               </div>
               <div class="desc">
                 <div class="title">
-                  <a :href="`/item/${item.sku.id}`">{{ item.sku.title }}</a>
+                  <a :href="`/mall/item/${item.sku.id}`">{{ item.sku.title }}</a>
                 </div>
-                <ul class="attrs">
-                  <li v-for="(attr, attrIndex) in item.sku.attrs" :key="attrIndex" class="attr">{{ attr.value }}</li>
+                <ul class="specs">
+                  <li v-for="(spec, specIndex) in item.sku.specs" :key="specIndex" class="spec">{{ spec.value }}</li>
                 </ul>
                 <div class="price">
                   <span class="price-icon">¥</span>
@@ -108,7 +108,8 @@ export default {
     position: absolute;
     right: 0;
     display: none;
-    padding-top: 20px;
+    padding-top: 1.5rem;
+    overscroll-behavior: contain;
   }
 
   .list {
@@ -143,6 +144,7 @@ export default {
     .items {
       max-height: 30rem;
       overflow: auto;
+      // scroll-snap-type: y mandatory;
 
       .item {
         display: flex;
@@ -152,6 +154,7 @@ export default {
         padding: 1.5rem;
         overflow: hidden;
         border-top: var(--border-list);
+        // scroll-snap-align: start;
 
         &:first-child {
           border-top: none;
@@ -226,11 +229,11 @@ export default {
             }
           }
 
-          .attrs {
+          .specs {
             display: flex;
             margin: 1rem 0;
 
-            .attr {
+            .spec {
               padding-right: 0.5rem;
               margin-right: 0.5rem;
               border-right: var(--border-list);

@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // spu: 坚果3
-export const jianguo3 = {
+export const spu = {
   id: '1000406',
   title: '坚果 3',
   desc: '漂亮得不像实力派',
@@ -24,94 +24,126 @@ export const jianguo3 = {
 };
 
 // sku: 坚果3 碳黑色 4G + 32GB
-export const jianguo3Black432 = _.defaultsDeep(
+export const black432 = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100040601',
     title: '坚果 3（碳黑色，4G + 32GB，全网通）',
     image: 'https://resource.smartisan.com/resource/13e91511f6ba3227ca5378fd2e93c54b.png',
     images: ['https://resource.smartisan.com/resource/13e91511f6ba3227ca5378fd2e93c54b.png'],
-    attrs: [
+    specs: [
       { key: '颜色', value: '碳黑色', hex: '#161111' },
       { key: '容量', value: '4G + 32GB' },
     ],
+    discount: 999,
   },
-  jianguo3,
+  spu,
 );
 
 // sku: 坚果3 碳黑色 4G + 64GB
-export const jianguo3Black464 = _.defaultsDeep(
+export const black464 = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100040602',
     title: '坚果 3（碳黑色，4G + 64GB，全网通）',
     image: 'https://resource.smartisan.com/resource/13e91511f6ba3227ca5378fd2e93c54b.png',
     images: ['https://resource.smartisan.com/resource/13e91511f6ba3227ca5378fd2e93c54b.png'],
-    attrs: [
+    specs: [
       { key: '颜色', value: '碳黑色', hex: '#161111' },
       { key: '容量', value: '4G + 64GB' },
     ],
   },
-  jianguo3,
+  spu,
 );
 
 // sku: 坚果3 酒红色 4G + 32GB
-export const jianguo3Red432 = _.defaultsDeep(
+export const red432 = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100040603',
     title: '坚果 3（酒红色，4G + 32GB，全网通）',
     image: 'https://resource.smartisan.com/resource/fac4130efc39ed4db697cc8d137890e9.png',
     images: ['https://resource.smartisan.com/resource/fac4130efc39ed4db697cc8d137890e9.png'],
-    attrs: [
+    specs: [
       { key: '颜色', value: '酒红色', hex: '#ad4147' },
       { key: '容量', value: '4G + 32GB' },
     ],
+    discount: 999,
   },
-  jianguo3,
+  spu,
 );
 
 // sku: 坚果3 酒红色 4G + 64GB
-export const jianguo3Red464 = _.defaultsDeep(
+export const red464 = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100040604',
     title: '坚果 3（酒红色，4G + 64GB，全网通）',
     image: 'https://resource.smartisan.com/resource/fac4130efc39ed4db697cc8d137890e9.png',
     images: ['https://resource.smartisan.com/resource/fac4130efc39ed4db697cc8d137890e9.png'],
-    attrs: [
+    specs: [
       { key: '颜色', value: '酒红色', hex: '#ad4147' },
       { key: '容量', value: '4G + 64GB' },
     ],
   },
-  jianguo3,
+  spu,
 );
 
 // sku: 坚果3 浅金色 4G + 32GB
-export const jianguo3Gold432 = _.defaultsDeep(
+export const gold432 = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100040605',
     title: '坚果 3（浅金色，4G + 32GB，全网通）',
     image: 'https://resource.smartisan.com/resource/91dc3f577960e30ca11b632e7b6ebd0f.png',
     images: ['https://resource.smartisan.com/resource/91dc3f577960e30ca11b632e7b6ebd0f.png'],
-    attrs: [
+    specs: [
       { key: '颜色', value: '浅金色', hex: '#e7e6df' },
       { key: '容量', value: '4G + 32GB' },
     ],
+    discount: 999,
   },
-  jianguo3,
+  spu,
 );
 
 // sku: 坚果3 浅金色 4G + 64GB
-export const jianguo3Gold464 = _.defaultsDeep(
+export const gold464 = _.defaultsDeep(
   {
+    spu: '1000406',
     id: '100040606',
     title: '坚果 3（浅金色，4G + 64GB，全网通）',
     image: 'https://resource.smartisan.com/resource/91dc3f577960e30ca11b632e7b6ebd0f.png',
     images: ['https://resource.smartisan.com/resource/91dc3f577960e30ca11b632e7b6ebd0f.png'],
-    attrs: [
+    specs: [
       { key: '颜色', value: '浅金色', hex: '#e7e6df' },
       { key: '容量', value: '4G + 64GB' },
     ],
   },
-  jianguo3,
+  spu,
 );
 
 // 加入skus
-jianguo3.skus = [jianguo3Black432, jianguo3Black464, jianguo3Red432, jianguo3Red464, jianguo3Gold432, jianguo3Gold464];
+spu.skus = [black432, black464, red432, red464, gold432, gold464];
+
+// 加入specs
+const specs = [];
+spu?.skus?.forEach((sku) => {
+  sku?.specs?.forEach((spec) => {
+    const temp = _.cloneDeep(spec);
+    if (!temp.skus) temp.skus = [sku.id];
+    const item = specs.find((item) => item.key === spec.key && item.value === temp.value);
+    if (!item) specs.push(temp);
+    else item.skus.push(sku.id);
+  });
+});
+spu.specs = specs;
+
+export default {
+  spu,
+  black432,
+  black464,
+  red432,
+  red464,
+  gold432,
+  gold464,
+};

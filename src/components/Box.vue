@@ -7,8 +7,8 @@
         <i class="smartisan-icon gt"></i>
       </a>
       <div v-if="pageTotal" class="pagination">
-        <a :class="leftClass" @click="handlePagination('left')"></a>
-        <a :class="rightClass" @click="handlePagination('right')"></a>
+        <a :class="leftClass" @click="pageCurrent--"></a>
+        <a :class="rightClass" @click="pageCurrent++"></a>
       </div>
     </div>
     <div class="sm-box-body">
@@ -61,11 +61,9 @@ export default {
       return temp;
     },
   },
-  methods: {
-    handlePagination(direction) {
-      if (direction === 'left') this.pageCurrent--;
-      else this.pageCurrent++;
-      this.$emit('page-change', this.pageCurrent);
+  watch: {
+    pageCurrent(val) {
+      this.$emit('page-change', val);
     },
   },
 };

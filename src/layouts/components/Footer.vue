@@ -98,18 +98,13 @@ export default {
         display: flex;
 
         ul {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
           min-width: 13rem;
 
-          li {
-            margin-bottom: 1rem;
-
-            &:last-child {
-              margin-bottom: 0;
-            }
-          }
-
           .title {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             font-weight: bold;
             color: var(--font-color-2);
           }

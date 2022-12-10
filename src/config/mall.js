@@ -1,6 +1,6 @@
-import { jianguo3 } from '@/config/jianguo3';
-import { earphone } from '@/config/earphone';
-import { phoneCase } from '@/config/phone-case';
+import { spu as jianguo3 } from '@/config/jianguo3';
+import { spu as earphone } from '@/config/earphone';
+import { spu as phoneCase } from '@/config/phone-case';
 
 // 轮播图
 export const banners = [

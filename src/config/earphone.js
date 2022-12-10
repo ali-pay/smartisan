@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 // spu: 耳机
-export const earphone = {
+export const spu = {
   id: '1000358',
   title: 'Smartisan 半入耳式耳机 心动版',
   desc: '哑光表面、专业级调音',
@@ -19,8 +19,9 @@ export const earphone = {
 };
 
 // sku: 耳机 黑色
-export const earphoneBlack = _.defaultsDeep(
+export const black = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100035801',
     title: 'Smartisan 半入耳式耳机心动版（黑色）',
     image: 'https://resource.smartisan.com/resource/e9a27b0fa0e6bc3b81db28d891ec9468.jpg',
@@ -31,7 +32,7 @@ export const earphoneBlack = _.defaultsDeep(
       'https://resource.smartisan.com/resource/9c684bb38c214e2343bef0080f204eb8.jpg',
       'https://resource.smartisan.com/resource/4461c61d6a0db03fc0d75c43ed4739ea.jpg',
     ],
-    attrs: [
+    specs: [
       {
         key: '颜色',
         value: '黑色',
@@ -40,12 +41,13 @@ export const earphoneBlack = _.defaultsDeep(
       },
     ],
   },
-  earphone,
+  spu,
 );
 
 // sku: 耳机 红色
-export const earphoneRed = _.defaultsDeep(
+export const red = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100035802',
     title: 'Smartisan 半入耳式耳机心动版（红色）',
     image: 'https://resource.smartisan.com/resource/d9a4019f575264674c7826645ca7d33a.jpg',
@@ -56,7 +58,7 @@ export const earphoneRed = _.defaultsDeep(
       'https://resource.smartisan.com/resource/2bfbe11fb24a6668f5ef8a80e20b5800.jpg',
       'https://resource.smartisan.com/resource/82042cc29fc9c4cb6161094b2513a08f.jpg',
     ],
-    attrs: [
+    specs: [
       {
         key: '颜色',
         value: '红色',
@@ -65,12 +67,13 @@ export const earphoneRed = _.defaultsDeep(
       },
     ],
   },
-  earphone,
+  spu,
 );
 
 // sku: 耳机 蓝色
-export const earphoneBlue = _.defaultsDeep(
+export const blue = _.defaultsDeep(
   {
+    spu: spu.id,
     id: '100035803',
     title: 'Smartisan 半入耳式耳机心动版（蓝色）',
     image: 'https://resource.smartisan.com/resource/90be7779c2454407ee5f4b6184c929ed.jpg',
@@ -81,7 +84,7 @@ export const earphoneBlue = _.defaultsDeep(
       'https://resource.smartisan.com/resource/935a518945458cf6375eeb2f878091fc.jpg',
       'https://resource.smartisan.com/resource/803aad2fed639e92ad651f0968f3e8cd.jpg',
     ],
-    attrs: [
+    specs: [
       {
         key: '颜色',
         value: '蓝色',
@@ -90,8 +93,27 @@ export const earphoneBlue = _.defaultsDeep(
       },
     ],
   },
-  earphone,
+  spu,
 );
 
 // 加入skus
-earphone.skus = [earphoneBlack, earphoneRed, earphoneBlue];
+spu.skus = [black, red, blue];
+// 加入specs
+const specs = [];
+spu?.skus?.forEach((sku) => {
+  sku?.specs?.forEach((spec) => {
+    const temp = _.cloneDeep(spec);
+    if (!temp.skus) temp.skus = [sku.id];
+    const item = specs.find((item) => item.key === spec.key && item.value === temp.value);
+    if (!item) specs.push(temp);
+    else item.skus.push(sku.id);
+  });
+});
+spu.specs = specs;
+
+export default {
+  spu,
+  black,
+  red,
+  blue,
+};
