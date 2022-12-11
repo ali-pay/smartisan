@@ -39,7 +39,7 @@
           <img :src="item.image" />
           <p class="title">{{ item.title }}</p>
           <p class="desc">{{ item.desc }}</p>
-          <a class="link" :href="item.link">阅读全文<i class="smartisan-icon gt"></i></a>
+          <a class="link" :href="item.link">阅读全文<i class="smartisan-icon gt" /></a>
         </div>
       </div>
     </sm-box>

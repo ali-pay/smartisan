@@ -1,8 +1,8 @@
 <template>
   <div class="sm-input-number">
-    <a :class="minusClass" :style="imgSts" @click="value--"></a>
-    <p class="number" :style="numSts">{{ value }}</p>
-    <a :class="plusClass" :style="imgSts" @click="value++"></a>
+    <i :class="minusClass" :style="imgSts" @click="newVal--" />
+    <span class="number" :style="textSts">{{ newVal }}</span>
+    <i :class="plusClass" :style="imgSts" @click="newVal++" />
   </div>
 </template>
 
@@ -10,6 +10,11 @@
 export default {
   name: 'SmInputNumber',
   props: {
+    // 计数值
+    value: {
+      type: Number,
+      default: 1,
+    },
     // 高度
     height: {
       type: Number,
@@ -34,18 +39,18 @@ export default {
   data() {
     return {
       // 计数值
-      value: 1,
+      newVal: this.value,
     };
   },
   computed: {
     minusClass() {
       const temp = ['minus'];
-      if (this.value <= this.min) temp.push('disabled');
+      if (this.newVal <= this.min) temp.push('disabled');
       return temp;
     },
     plusClass() {
       const temp = ['plus'];
-      if (this.value >= this.max) temp.push('disabled');
+      if (this.newVal >= this.max) temp.push('disabled');
       return temp;
     },
     imgSts() {
@@ -56,7 +61,7 @@ export default {
       }
       return temp;
     },
-    numSts() {
+    textSts() {
       const temp = {};
       if (this.height) temp.width = `${this.height}px`;
       if (this.size) temp.fontSize = `${this.size}px`;
@@ -64,7 +69,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    newVal(val) {
       this.$emit('input', val);
     },
   },
@@ -75,6 +80,7 @@ export default {
 .sm-input-number {
   display: flex;
   align-items: center;
+  justify-content: center;
 
   .number {
     width: 3.5rem;
@@ -87,6 +93,7 @@ export default {
   .plus {
     width: 3.5rem;
     height: 3.5rem;
+    cursor: pointer;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

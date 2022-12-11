@@ -7,6 +7,7 @@ export default [
     children: [
       { path: '', component: () => import('@/views/mall/index.vue') },
       { path: 'item/:id', component: () => import('@/views/mall/item.vue') },
+      { path: 'cart', component: () => import('@/views/mall/cart.vue') },
     ],
     // redirect: '/mall/item',
   },

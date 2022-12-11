@@ -1,6 +1,6 @@
 <template>
   <div class="header-cart">
-    <a class="icon" href="/cart"><i v-if="products?.length" class="red-dot"></i></a>
+    <router-link class="icon" to="/mall/cart"><i v-if="products?.length" class="red-dot" /></router-link>
     <div class="container">
       <div class="list">
         <div v-if="!products" class="loading"></div>
@@ -17,32 +17,32 @@
               </div>
               <div class="desc">
                 <div class="title">
-                  <a :href="`/mall/item/${item.sku.id}`">{{ item.sku.title }}</a>
+                  <router-link :to="`/mall/item/${item.sku.id}`">{{ item.sku.title }}</router-link>
                 </div>
                 <ul class="specs">
                   <li v-for="(spec, specIndex) in item.sku.specs" :key="specIndex" class="spec">{{ spec.value }}</li>
                 </ul>
                 <div class="price">
                   <span class="price-icon">¥</span>
-                  <span class="price-num">{{ item.sku.price.toFixed(2) }}</span>
+                  <span class="price-num">{{ item.sku?.discount?.toFixed(2) || item.sku?.price?.toFixed(2) }}</span>
                   <span class="quantity">x {{ item.quantity }}</span>
                 </div>
               </div>
-              <i class="btn-delete" @click="deleteProduct(item)"></i>
+              <i class="btn-delete" @click="deleteFromCart(item.sku.id)" />
             </li>
           </ul>
           <div class="total">
             <div>
               <p class="quantity">
-                共 <span>{{ quantity }}</span> 件商品
+                共 <span>{{ totalQuantity }}</span> 件商品
               </p>
               <p class="price">
                 合计：
                 <span class="price-icon">¥</span>
-                <span class="price-num">{{ price.toFixed(2) }}</span>
+                <span class="price-num">{{ totalPrice.toFixed(2) }}</span>
               </p>
             </div>
-            <sm-button :width="120" :size="14">查看购物车</sm-button>
+            <sm-button :width="120" :size="14" to="/mall/cart">查看购物车</sm-button>
           </div>
         </div>
       </div>
@@ -57,16 +57,17 @@ export default {
     products() {
       return this.$store.state.user.cart;
     },
-    quantity() {
+    totalQuantity() {
       return this.products.reduce((total, item) => total + item.quantity, 0);
     },
-    price() {
-      return this.products.reduce((total, item) => total + item.quantity * item.sku.price, 0);
+    totalPrice() {
+      return this.products.reduce((total, item) => total + item.quantity * (item.sku.discount || item.sku.price), 0);
     },
   },
   methods: {
-    deleteProduct(item) {
-      console.log('item:', item);
+    // 从购物车删除
+    deleteFromCart(skuId) {
+      if (skuId) this.$store.dispatch('user/deleteFromCart', { skuIds: [skuId] });
     },
   },
 };
@@ -121,7 +122,7 @@ export default {
 
     .loading {
       height: 10rem;
-      background-image: url('@/assets/images/header-cart/loading.gif');
+      background-image: url('@/assets/images/components/loading.gif');
       background-repeat: no-repeat;
       background-position: center;
     }
@@ -170,17 +171,18 @@ export default {
         }
 
         .btn-delete {
+          display: block;
           width: 3.5rem;
           height: 3.5rem;
           cursor: pointer;
           visibility: hidden;
-          background-image: url('@/assets/images/header-cart/btn-delete.png');
+          background-image: url('@/assets/images/components/btn-delete.png');
           background-repeat: no-repeat;
           background-size: contain;
 
-          &:hover,
+          // &:hover,
           &:active {
-            background-image: url('@/assets/images/header-cart/btn-delete-active.png');
+            background-image: url('@/assets/images/components/btn-delete-active.png');
           }
         }
 

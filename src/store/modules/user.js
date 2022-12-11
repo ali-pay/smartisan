@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import { android } from '@/config/phone-case';
 import { black, red, blue } from '@/config/earphone';
 import { black464, red464, gold464 } from '@/config/jianguo3';
@@ -13,39 +14,75 @@ const state = {
     {
       sku: black464,
       quantity: 1,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
     {
       sku: red464,
       quantity: 2,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
     {
       sku: gold464,
       quantity: 3,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
     {
       sku: black,
       quantity: 4,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
     {
       sku: red,
       quantity: 5,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
     {
       sku: blue,
       quantity: 6,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
     {
       sku: android,
       quantity: 7,
+      totalPrice: 0,
+      totalDiscount: 0,
     },
   ],
 };
 
 const getters = {};
 
-const mutations = {};
+const mutations = {
+  updateCart(state, payload) {
+    state.cart = payload;
+  },
+};
 
-const actions = {};
+const actions = {
+  // 添加到购物车
+  addToCart({ state, commit }, payload) {
+    const cart = _.cloneDeep(state.cart);
+    // 判断sku是否存在
+    const exist = cart.find((item) => item.sku.id === payload.sku.id);
+    // 存在则叠加数量
+    if (exist) exist.quantity += payload.quantity;
+    // 不在则添加到第一位
+    else cart.unshift(payload);
+    commit('updateCart', cart);
+  },
+  // 从购物车删除
+  deleteFromCart({ state, commit }, payload) {
+    let cart = _.cloneDeep(state.cart);
+    cart = cart.filter((item) => !payload.skuIds.includes(item.sku.id));
+    commit('updateCart', cart);
+  },
+};
 
 export default {
   namespaced: true,

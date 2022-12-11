@@ -15,7 +15,7 @@
           <p class="tel">{{ contactus.title }}</p>
           <p v-for="(item, index) in contactus.tips" :key="index">{{ item }}</p>
           <a class="help" :href="contactus.link">
-            <i class="smartisan-icon info-question"></i>
+            <i class="smartisan-icon info-question" />
             在线帮助
           </a>
         </div>
@@ -32,7 +32,7 @@
           <ul>
             <li v-for="(item, index) in beian" :key="index">
               <a target="_blank" :href="item.link">
-                <i v-if="item.icon" class="icon-police"></i>
+                <i v-if="item.icon" class="icon-police" />
                 {{ item.title }}
               </a>
             </li>

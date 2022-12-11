@@ -1,5 +1,5 @@
 <template>
-  <a v-if="sku" :href="'/mall/item/' + sku.id" class="sm-product">
+  <router-link v-if="sku" :to="`/mall/item/${sku.id}`" class="sm-product">
     <img :src="sku.image" />
     <p class="title">{{ sku.title }}</p>
     <p class="desc">{{ sku.desc }}</p>
@@ -16,7 +16,7 @@
       <span class="discount"><i>¥</i>{{ sku?.discount?.toFixed(2) || sku?.price?.toFixed(2) }}</span>
       <span v-if="sku.discount" class="price">¥{{ sku?.price?.toFixed(2) }}</span>
     </p>
-  </a>
+  </router-link>
 </template>
 
 <script>

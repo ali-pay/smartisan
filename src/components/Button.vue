@@ -42,6 +42,16 @@ export default {
       type: Number,
       default: 0,
     },
+    // 跳转路由
+    to: {
+      type: String,
+      default: null,
+    },
+    // 跳转链接
+    href: {
+      type: String,
+      default: null,
+    },
   },
   computed: {
     cls() {
@@ -60,6 +70,8 @@ export default {
   },
   methods: {
     handleClick(evt) {
+      if (this.to) this.$router.push(this.to);
+      if (this.href) window.open(this.href);
       this.$emit('click', evt);
     },
   },

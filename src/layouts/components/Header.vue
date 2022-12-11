@@ -1,7 +1,7 @@
 <template>
   <div class="header" :class="themeColor">
     <div class="wrapper">
-      <a class="logo" href="/"></a>
+      <router-link class="logo" to="/"></router-link>
       <ul class="links">
         <li class="link"><a class="active" @click.stop="changeColor">切换主题颜色</a></li>
         <li v-for="(item, index) in links" :key="index" class="link">
@@ -19,21 +19,33 @@
       </ul>
       <div class="menus">
         <div class="user">
-          <a class="icon" href="/user"></a>
+          <router-link class="icon" to="/mall/user"></router-link>
           <div v-if="user" class="container">
             <div class="list">
               <div class="avatar">
                 <img v-if="user.avatar" :src="user.avatar" />
-                <i v-else></i>
+                <i v-else />
               </div>
               <p class="nickname">{{ user.nickname }}</p>
               <ul>
-                <li class="order"><t-icon name="bulletpoint" /><a href="/user/order">我的订单</a></li>
-                <li class="support"><t-icon name="chat" /><a href="/user/support">售后服务</a></li>
-                <li class="coupon"><t-icon name="discount" /><a href="/user/coupon">我的优惠</a></li>
-                <li class="information"><t-icon name="user" /><a href="/user/information">账户资料</a></li>
-                <li class="address"><t-icon name="location" /><a href="/user/address">收货地址</a></li>
-                <li class="logout"><t-icon name="close-circle" /><a href="/user/logout">退出</a></li>
+                <router-link tag="li" to="/mall/user/order" class="order">
+                  <t-icon name="bulletpoint" />我的订单
+                </router-link>
+                <router-link tag="li" to="/mall/user/support" class="support">
+                  <t-icon name="chat" />售后服务
+                </router-link>
+                <router-link tag="li" to="/mall/user/coupon" class="coupon">
+                  <t-icon name="discount" />我的优惠
+                </router-link>
+                <router-link tag="li" to="/mall/user/information" class="information">
+                  <t-icon name="user" />账户资料
+                </router-link>
+                <router-link tag="li" to="/mall/user/address" class="address">
+                  <t-icon name="location" />收货地址
+                </router-link>
+                <router-link tag="li" to="/mall/user/logout" class="logout">
+                  <t-icon name="close-circle" />退出
+                </router-link>
               </ul>
             </div>
           </div>
@@ -208,6 +220,7 @@ export default {
               border-top: var(--border-list);
 
               &:hover {
+                color: var(--font-color-2);
                 background-color: var(--color-hover);
               }
 
@@ -217,10 +230,6 @@ export default {
 
               .t-icon {
                 font-size: 1.3rem;
-              }
-
-              a {
-                color: var(--font-color-1);
               }
             }
           }

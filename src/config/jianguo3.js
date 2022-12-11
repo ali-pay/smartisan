@@ -5,7 +5,7 @@ export const spu = {
   id: '1000406',
   title: '坚果 3',
   desc: '漂亮得不像实力派',
-  price: 1299.0,
+  price: 1299,
   quantity: 100,
   image_pc: 'https://resource.smartisan.com/resource/d5a1453ad115e15bd79579e8bdb20ba0.jpg',
   image_pc_params: 'https://resource.smartisan.com/resource/dfb3cfc644fb5d9ec774f04a967be5a2.jpg',

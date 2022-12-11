@@ -4,11 +4,11 @@
       <span class="title">{{ title }}</span>
       <a v-if="buttonText" :href="buttonLink" class="button" target="_blank">
         <span>{{ buttonText }}</span>
-        <i class="smartisan-icon gt"></i>
+        <i class="smartisan-icon gt" />
       </a>
       <div v-if="pageTotal" class="pagination">
-        <a :class="leftClass" @click="pageCurrent--"></a>
-        <a :class="rightClass" @click="pageCurrent++"></a>
+        <i :class="leftClass" @click="pageCurrent--" />
+        <i :class="rightClass" @click="pageCurrent++" />
       </div>
     </div>
     <div class="sm-box-body">
@@ -123,6 +123,7 @@ export default {
       .right {
         width: 4.5rem;
         height: 4.5rem;
+        cursor: pointer;
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;

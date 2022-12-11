@@ -53,7 +53,7 @@
               <li class="spec quantity">
                 <p class="title">数量选择</p>
                 <ul class="list">
-                  <li class="item"><sm-input-number v-model="quantity"></sm-input-number></li>
+                  <li class="item"><sm-input-number v-model="quantity" /></li>
                 </ul>
               </li>
               <li class="spec line-solid"></li>
@@ -87,7 +87,7 @@
             <p class="discount"><i>¥</i>{{ ((sku?.discount || sku?.price) * quantity).toFixed(2) }}</p>
             <p v-if="sku.discount" class="price">原价：¥{{ (sku.price * quantity).toFixed(2) }}</p>
           </div>
-          <sm-button :width="120" :height="35" :size="14" color="gray">加入购物车</sm-button>
+          <sm-button :width="120" :height="35" :size="14" color="gray" @click="addToCart">加入购物车</sm-button>
           <sm-button :width="120" :height="35" :size="14">立即购买</sm-button>
         </div>
       </div>
@@ -202,6 +202,10 @@ export default {
     // 滚动事件
     handleScroll() {
       this.fixed = this.el.clientHeight + this.el.scrollTop <= this.offsetTop;
+    },
+    // 添加到购物车
+    addToCart() {
+      this.$store.dispatch('user/addToCart', { sku: this.sku, quantity: this.quantity });
     },
   },
 };
