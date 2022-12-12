@@ -9,8 +9,8 @@
           <p class="desc">您还没有选购任何商品，现在前往商城选购吧！</p>
         </div>
         <div v-else>
-          <ul class="items">
-            <li v-for="(item, index) in products" :key="index" class="item">
+          <transition-group tag="ul" name="group" class="items" appear>
+            <li v-for="item in products" :key="item.sku.id" class="item">
               <div class="thumb">
                 <span v-if="!item.sku.quantity">缺货</span>
                 <img :src="item.sku.image" />
@@ -30,7 +30,7 @@
               </div>
               <i class="btn-delete" @click="deleteFromCart(item.sku.id)" />
             </li>
-          </ul>
+          </transition-group>
           <div class="total">
             <div>
               <p class="quantity">
@@ -67,13 +67,22 @@ export default {
   methods: {
     // 从购物车删除
     deleteFromCart(skuId) {
-      if (skuId) this.$store.dispatch('user/deleteFromCart', { skuIds: [skuId] });
+      this.$store.dispatch('user/deleteFromCart', { skuIds: [skuId] });
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.group-move {
+  transition: all 0.3s;
+}
+
+.group-leave-active {
+  position: absolute;
+  opacity: 0;
+}
+
 .header-cart {
   margin-left: 2rem;
 
@@ -145,6 +154,7 @@ export default {
     .items {
       max-height: 30rem;
       overflow: auto;
+      overflow-y: scroll;
       // scroll-snap-type: y mandatory;
 
       .item {

@@ -1,5 +1,5 @@
 <template>
-  <div id="cart" class="wrapper">
+  <div id="🛒" class="wrapper">
     <sm-box title="购物车">
       <div v-if="!products.length" class="empty">
         <img
@@ -22,10 +22,9 @@
         </div>
         <div class="body">
           <sm-checkbox-group v-model="selSkus">
-            <ul>
-              <li v-for="(item, index) in products" :key="index" class="item">
+            <transition-group tag="ul" name="group" appear>
+              <li v-for="item in products" :key="item.sku.id" class="item">
                 <div class="left">
-                  <i class="checkbox" />
                   <sm-checkbox :title="item.sku.id" hide-title />
                   <img :src="item.sku.image" />
                   <div class="info">
@@ -49,7 +48,7 @@
                   <div class="operation"><i class="btn-delete" @click="deleteFromCart(item.sku.id)" /></div>
                 </div>
               </li>
-            </ul>
+            </transition-group>
           </sm-checkbox-group>
         </div>
         <div :class="{ fixed: fixed }" class="footer">
@@ -132,10 +131,13 @@ export default {
         else this.selSkus = this.products.map((item) => item.sku.id);
       },
     },
-  },
-  mounted() {
-    // 监听滚动事件
-    this.recalc();
+    products: {
+      immediate: true,
+      handler() {
+        // 监听滚动事件
+        this.recalc();
+      },
+    },
   },
   methods: {
     // 从购物车删除
@@ -145,7 +147,6 @@ export default {
       else skuIds = this.selSkus;
       this.$store.dispatch('user/deleteFromCart', { skuIds });
       this.selSkus = this.selSkus.filter((item) => !skuIds.includes(item));
-      this.recalc();
     },
     // 滚动事件
     handleScroll() {
@@ -155,7 +156,7 @@ export default {
     recalc() {
       this.$nextTick(() => {
         this.el = document.documentElement;
-        const cart = document.querySelector('#cart');
+        const cart = document.querySelector('#🛒');
         this.offsetTop = cart.clientHeight + cart.offsetTop;
         window.addEventListener('scroll', this.handleScroll);
         this.handleScroll();
@@ -166,6 +167,15 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.group-move {
+  transition: all 0.3s;
+}
+
+.group-leave-active {
+  position: absolute;
+  opacity: 0;
+}
+
 .empty {
   display: flex;
   flex-direction: column;

@@ -69,10 +69,10 @@ export default {
     },
   },
   methods: {
-    handleClick(evt) {
+    handleClick(event) {
       if (this.to) this.$router.push(this.to);
       if (this.href) window.open(this.href);
-      this.$emit('click', evt);
+      this.$emit('click', event);
     },
   },
 };

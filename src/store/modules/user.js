@@ -14,44 +14,30 @@ const state = {
     {
       sku: black464,
       quantity: 1,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
     {
       sku: red464,
       quantity: 2,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
     {
       sku: gold464,
       quantity: 3,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
     {
       sku: black,
       quantity: 4,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
     {
       sku: red,
       quantity: 5,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
     {
       sku: blue,
       quantity: 6,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
     {
       sku: android,
       quantity: 7,
-      totalPrice: 0,
-      totalDiscount: 0,
     },
   ],
 };

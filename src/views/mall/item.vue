@@ -87,11 +87,16 @@
             <p class="discount"><i>¥</i>{{ ((sku?.discount || sku?.price) * quantity).toFixed(2) }}</p>
             <p v-if="sku.discount" class="price">原价：¥{{ (sku.price * quantity).toFixed(2) }}</p>
           </div>
-          <sm-button :width="120" :height="35" :size="14" color="gray" @click="addToCart">加入购物车</sm-button>
+          <sm-button id="🛒" :width="120" :height="35" :size="14" color="gray" @click="addToCart">加入购物车</sm-button>
           <sm-button :width="120" :height="35" :size="14">立即购买</sm-button>
         </div>
       </div>
     </div>
+    <transition v-for="item in aniCount" :key="item" appear @before-enter="beforeEnter" @after-enter="afterEnter">
+      <div v-if="animation" class="animation" :style="{ top: `${aniEndTop}px`, left: `${aniEndLeft}px` }">
+        <img :src="aniImg" />
+      </div>
+    </transition>
   </sm-loading>
 </template>
 
@@ -115,6 +120,13 @@ export default {
       fixed: true,
       el: null,
       offsetTop: 0,
+      animation: false,
+      aniImg: '',
+      aniStartTop: 0,
+      aniStartLeft: 0,
+      aniEndTop: 0,
+      aniEndLeft: 0,
+      aniCount: 1,
     };
   },
   mounted() {
@@ -206,12 +218,61 @@ export default {
     // 添加到购物车
     addToCart() {
       this.$store.dispatch('user/addToCart', { sku: this.sku, quantity: this.quantity });
+
+      // 起点坐标
+      const btnCart = document.querySelector('#🛒').getBoundingClientRect();
+      this.aniStartTop = btnCart.top - btnCart.height;
+      this.aniStartLeft = btnCart.left + btnCart.width / 2;
+
+      // 终点坐标
+      const headerCart = document.querySelector('.header-cart').getBoundingClientRect();
+      this.aniEndTop = headerCart.top;
+      this.aniEndLeft = headerCart.left;
+
+      // 显示动画
+      this.animation = true;
+      this.aniImg = this.sku.image;
+      this.aniCount++;
+    },
+    beforeEnter(el) {
+      const elStyle = el.style;
+      const elChild = el.children[0];
+      const elChildSty = elChild.style;
+      elStyle.transform = `translate3d(0, ${this.aniStartTop - this.aniEndTop}px, 0)`;
+      elChildSty.transform = `translate3d(${-(this.aniEndLeft - this.aniStartLeft)}px, 0, 0) scale(2)`;
+    },
+    afterEnter(el) {
+      const elStyle = el.style;
+      const elChild = el.children[0];
+      const elChildSty = elChild.style;
+      elStyle.transform = `translate3d(0, 0, 0)`;
+      elChildSty.transform = `translate3d(0, 0, 0) scale(0)`;
+      elStyle.transition = 'transform .6s cubic-bezier(0.3, 0.55, 0.5, 1.1)';
+      elChildSty.transition = 'transform .6s linear';
+      elChild.addEventListener('transitionend', () => {
+        this.animation = false;
+      });
+      elChild.addEventListener('webkitAnimationEnd', () => {
+        this.animation = false;
+      });
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
+.animation {
+  position: fixed;
+  width: 1.5rem;
+  height: 1.5rem;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .wrapper {
   .item-wrapper {
     display: flex;
