@@ -38,7 +38,9 @@
                 </div>
                 <div class="right">
                   <div class="price">¥ {{ item.sku.price.toFixed(2) }}</div>
-                  <div class="quantity"><sm-input-number v-model="item.quantity" /></div>
+                  <div class="quantity">
+                    <sm-input-number v-model="item.quantity" @minus="handleMinus(item)" @plus="handlePlus(item)" />
+                  </div>
                   <div class="subtotal">
                     <p>¥ {{ ((item.sku?.discount || item.sku?.price) * item.quantity).toFixed(2) }}</p>
                     <p v-if="item.sku.discount" class="discount">
@@ -54,7 +56,7 @@
         <div :class="{ fixed: fixed }" class="footer">
           <div class="left">
             <sm-checkbox v-model="selAllSku" title="全选" />
-            <span class="delete" @click="deleteFromCart()">删除选中的商品</span>
+            <span class="delete" :class="{ disabled: !selSkus.length }" @click="deleteFromCart()">删除选中的商品</span>
           </div>
           <div class="right">
             <div class="total-quantity">
@@ -71,13 +73,13 @@
             </div>
             <div class="total-price">
               <p>
-                应付总额：<span class="red"><i>¥</i>{{ totalPrice }}</span>
+                应付总额：<span class="red"><i>¥</i>{{ totalPrice.toFixed(2) }}</span>
               </p>
               <p>
-                优惠总额：<span><i>¥</i>{{ totalDiscount }}</span>
+                优惠总额：<span><i>¥</i>{{ totalDiscount.toFixed(2) }}</span>
               </p>
             </div>
-            <sm-button :width="120" :height="40" :size="14">立即购买</sm-button>
+            <sm-button :width="120" :height="40" :size="14" @click="gotoCheckout">立即购买</sm-button>
           </div>
         </div>
       </div>
@@ -86,6 +88,8 @@
 </template>
 
 <script>
+import _ from 'lodash';
+
 export default {
   name: 'Cart',
   data() {
@@ -101,7 +105,7 @@ export default {
   },
   computed: {
     products() {
-      return this.$store.state.user.cart;
+      return _.cloneDeep(this.$store.state.user.cart);
     },
     // 总款数
     skuQuantity() {
@@ -140,6 +144,19 @@ export default {
     },
   },
   methods: {
+    // 立即购买
+    gotoCheckout() {
+      const products = this.products.filter((item) => this.selSkus.includes(item.sku.id));
+      this.$router.push({ name: 'Checkout', params: { products } });
+    },
+    // 减少数量
+    handleMinus(item) {
+      this.$store.dispatch('user/addToCart', { sku: item.sku, quantity: -1 });
+    },
+    // 增加数量
+    handlePlus(item) {
+      this.$store.dispatch('user/addToCart', { sku: item.sku, quantity: 1 });
+    },
     // 从购物车删除
     deleteFromCart(skuId) {
       let skuIds = [];
@@ -152,7 +169,7 @@ export default {
     handleScroll() {
       this.fixed = this.el.clientHeight + this.el.scrollTop <= this.offsetTop;
     },
-    // 重新计算购物车高度
+    // 重新计算高度
     recalc() {
       this.$nextTick(() => {
         this.el = document.documentElement;
@@ -233,10 +250,9 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 1.5rem 0;
-    border-bottom: 1px dashed var(--color-border);
 
-    &:last-child {
-      border-bottom: none;
+    &:not(:last-child) {
+      border-bottom: 1px dashed var(--color-border);
     }
 
     .left {
@@ -267,16 +283,13 @@ export default {
           display: flex;
 
           .spec {
-            padding-right: 1rem;
             margin-top: 1rem;
-            margin-right: 1rem;
             color: var(--font-color-1);
-            border-right: var(--border);
 
-            &:last-child {
-              padding-right: 0;
-              margin-right: 0;
-              border-right: none;
+            &:not(:last-child) {
+              padding-right: 1rem;
+              margin-right: 1rem;
+              border-right: var(--border);
             }
           }
         }

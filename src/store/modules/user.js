@@ -8,7 +8,25 @@ const state = {
     username: 'ali-pay',
     nickname: '支付宝',
     mobile: '18888888888',
-    // avatar: 'https://static.smartisanos.cn/cloud/index/img/default-user-avatar_d6c83a2e26.png',
+    avatar: 'https://avatars.githubusercontent.com/u/54493910',
+    addresses: [
+      {
+        id: 1,
+        name: '支付宝',
+        mobile: '18888888888',
+        path: ['广东省', '广州市', '越秀区', '黄花岗街道'],
+        address: '先烈中路100号大院1号楼',
+        default: true,
+      },
+      {
+        id: 2,
+        name: '支付宝',
+        mobile: '18888888888',
+        path: ['广东省', '广州市', '越秀区', '黄花岗街道'],
+        address: '先烈中路100号大院2号楼',
+        default: false,
+      },
+    ],
   },
   cart: [
     {
@@ -48,6 +66,9 @@ const mutations = {
   updateCart(state, payload) {
     state.cart = payload;
   },
+  updateAddresses(state, payload) {
+    state.info.addresses = payload;
+  },
 };
 
 const actions = {
@@ -55,9 +76,9 @@ const actions = {
   addToCart({ state, commit }, payload) {
     const cart = _.cloneDeep(state.cart);
     // 判断sku是否存在
-    const exist = cart.find((item) => item.sku.id === payload.sku.id);
+    const item = cart.find((item) => item.sku.id === payload.sku.id);
     // 存在则叠加数量
-    if (exist) exist.quantity += payload.quantity;
+    if (item) item.quantity += payload.quantity;
     // 不在则添加到第一位
     else cart.unshift(payload);
     commit('updateCart', cart);
@@ -67,6 +88,30 @@ const actions = {
     let cart = _.cloneDeep(state.cart);
     cart = cart.filter((item) => !payload.skuIds.includes(item.sku.id));
     commit('updateCart', cart);
+  },
+  // 添加到地址簿
+  addToAddresses({ state, commit }, payload) {
+    const addresses = _.cloneDeep(state.info.addresses);
+    if (payload.default) {
+      addresses.forEach((item) => {
+        item.default = false;
+      });
+    }
+    addresses.unshift(payload);
+    commit('updateAddresses', addresses);
+  },
+  // 更新某个地址
+  updateAddress({ state, commit }, payload) {
+    const addresses = _.cloneDeep(state.info.addresses);
+    const index = addresses.findIndex((item) => item.id === payload.id);
+    addresses[index] = payload;
+    commit('updateAddresses', addresses);
+  },
+  // 从地址簿删除
+  deleteFromAddresses({ state, commit }, payload) {
+    let addresses = _.cloneDeep(state.info.addresses);
+    addresses = addresses.filter((item) => item.id !== payload.id);
+    commit('updateAddresses', addresses);
   },
 };
 

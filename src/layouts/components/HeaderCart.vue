@@ -124,6 +124,7 @@ export default {
 
   .list {
     width: 30rem;
+    overflow: hidden;
     background: var(--color-white);
     border: var(--border);
     border-radius: var(--radius-xl);
@@ -154,7 +155,7 @@ export default {
     .items {
       max-height: 30rem;
       overflow: auto;
-      overflow-y: scroll;
+      // overflow-y: scroll;
       // scroll-snap-type: y mandatory;
 
       .item {
@@ -164,13 +165,7 @@ export default {
         height: 10rem;
         padding: 1.5rem;
         overflow: hidden;
-        border-top: var(--border-list);
         // scroll-snap-align: start;
-
-        &:first-child {
-          border-top: none;
-          border-radius: var(--radius-xl) var(--radius-xl) 0 0;
-        }
 
         &:hover {
           background-color: var(--color-hover);
@@ -178,6 +173,10 @@ export default {
           .btn-delete {
             visibility: visible;
           }
+        }
+
+        &:not(:last-child) {
+          border-bottom: var(--border-list);
         }
 
         .btn-delete {
@@ -189,6 +188,7 @@ export default {
           background-image: url('@/assets/images/components/btn-delete.png');
           background-repeat: no-repeat;
           background-size: contain;
+          transition: none;
 
           // &:hover,
           &:active {
@@ -246,14 +246,10 @@ export default {
             margin: 1rem 0;
 
             .spec {
-              padding-right: 0.5rem;
-              margin-right: 0.5rem;
-              border-right: var(--border-list);
-
-              &:last-child {
-                padding-right: 0;
-                margin-right: 0;
-                border-right: none;
+              &:not(:last-child) {
+                padding-right: 0.5rem;
+                margin-right: 0.5rem;
+                border-right: var(--border-list);
               }
             }
           }

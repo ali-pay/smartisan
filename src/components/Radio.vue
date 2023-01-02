@@ -1,6 +1,6 @@
 <template>
-  <div class="sm-checkbox" :class="cls" @click="handleClick">
-    <i :style="imgSts" />
+  <div class="sm-radio" :class="cls" @click="handleClick">
+    <i class="border" :style="borderSts"><i class="dot" :style="dotSts" /></i>
     <span v-if="!hideTitle" :style="textSts">{{ title }}</span>
   </div>
 </template>
@@ -9,7 +9,7 @@
 import Emitter from '@/utils/emitter';
 
 export default {
-  name: 'SmCheckbox',
+  name: 'SmRadio',
   mixins: [Emitter],
   props: {
     // 是否选中
@@ -22,13 +22,6 @@ export default {
     title: {
       type: String,
       default: null,
-    },
-    // 图标颜色
-    color: {
-      type: String,
-      // 可选：red / blue
-      default: 'blue',
-      validator: (val) => ['red', 'blue'].includes(val),
     },
     // 高度
     height: {
@@ -49,16 +42,24 @@ export default {
   },
   computed: {
     cls() {
-      const temp = [this.color];
+      const temp = [];
       if (this.disabled) temp.push('disabled');
       if (this.checked) temp.push('active');
       return temp;
     },
-    imgSts() {
+    borderSts() {
       const temp = {};
       if (this.height) {
         temp.width = `${this.height}px`;
         temp.height = `${this.height}px`;
+      }
+      return temp;
+    },
+    dotSts() {
+      const temp = {};
+      if (this.height) {
+        temp.width = `${this.height * 0.53}px`;
+        temp.height = `${this.height * 0.53}px`;
       }
       return temp;
     },
@@ -70,7 +71,7 @@ export default {
     group() {
       let parent = this.$parent;
       while (parent) {
-        if (parent.$options.name === 'SmCheckboxGroup') return parent;
+        if (parent.$options.name === 'SmRadioGroup') return parent;
         parent = parent.$parent;
       }
       return null;
@@ -79,56 +80,55 @@ export default {
   watch: {
     'group.value': {
       handler() {
-        this.checked = this.group?.value?.includes(this.title);
+        this.checked = this.group?.value === this.title;
       },
     },
   },
   mounted() {
-    if (this.group) this.checked = this.group?.value?.includes(this.title);
+    if (this.group) this.checked = this.group?.value === this.title;
   },
   methods: {
     handleClick() {
       this.checked = !this.checked;
-      if (!this.group) {
-        this.$emit('input', this.checked);
-        return;
-      }
-      let groupValue = this.group?.value;
-      if (this.checked) groupValue.push(this.title);
-      else groupValue = groupValue.filter((item) => item !== this.title);
-      this.dispatch('SmCheckboxGroup', 'input', [groupValue]);
+      if (!this.group) this.$emit('input', this.checked);
+      else this.dispatch('SmRadioGroup', 'input', this.title);
     },
   },
 };
 </script>
 
 <style lang="less" scoped>
-.sm-checkbox {
+.sm-radio {
   display: flex;
   gap: 0.5rem;
   align-items: center;
   justify-content: center;
   cursor: pointer;
 
-  &.active i {
-    background-image: url('@/assets/images/components/checkbox-active-blue.png');
+  .border {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: var(--border);
+    border-radius: 50%;
+    box-shadow: inset 0 2px 4px rgb(0 0 0 / 5%);
   }
 
-  &.active.red i {
-    background-image: url('@/assets/images/components/checkbox-active-red.png');
+  .dot {
+    display: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    background: #6c94f3;
+    background: linear-gradient(#749af4, #668ef2);
+    border: 1px solid #5d81d9;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
   }
 
-  i {
+  &.active .dot {
     display: block;
-    width: 2rem;
-    height: 2rem;
-    background-image: url('@/assets/images/components/checkbox.png');
-    background-repeat: no-repeat;
-    background-size: contain;
-  }
-
-  span {
-    font-weight: bold;
   }
 }
 </style>

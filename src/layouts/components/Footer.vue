@@ -160,14 +160,10 @@ export default {
         display: flex;
 
         li {
-          padding-right: 1rem;
-          margin-right: 1rem;
-          border-right: var(--border);
-
-          &:last-child {
-            padding-right: 0;
-            margin-right: 0;
-            border-right: none;
+          &:not(:last-child) {
+            padding-right: 1rem;
+            margin-right: 1rem;
+            border-right: var(--border);
           }
 
           .copyright {

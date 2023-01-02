@@ -1,8 +1,8 @@
 <template>
   <div class="sm-input-number">
-    <i :class="minusClass" :style="imgSts" @click="newVal--" />
+    <i :class="minusClass" :style="imgSts" @click="handleMinus" />
     <span class="number" :style="textSts">{{ newVal }}</span>
-    <i :class="plusClass" :style="imgSts" @click="newVal++" />
+    <i :class="plusClass" :style="imgSts" @click="handlePlus" />
   </div>
 </template>
 
@@ -71,6 +71,16 @@ export default {
   watch: {
     newVal(val) {
       this.$emit('input', val);
+    },
+  },
+  methods: {
+    handleMinus() {
+      this.newVal--;
+      this.$emit('minus', this.newVal);
+    },
+    handlePlus() {
+      this.newVal++;
+      this.$emit('plus', this.newVal);
     },
   },
 };

@@ -173,6 +173,7 @@ export default {
 
         .list {
           width: 13rem;
+          overflow: hidden;
           background: var(--color-white);
           border: var(--border);
           border-radius: var(--radius-xl);
@@ -222,10 +223,6 @@ export default {
               &:hover {
                 color: var(--font-color-2);
                 background-color: var(--color-hover);
-              }
-
-              &:last-child:hover {
-                border-radius: 0 0 var(--radius-xl) var(--radius-xl);
               }
 
               .t-icon {

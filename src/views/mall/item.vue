@@ -88,7 +88,7 @@
             <p v-if="sku.discount" class="price">原价：¥{{ (sku.price * quantity).toFixed(2) }}</p>
           </div>
           <sm-button id="🛒" :width="120" :height="35" :size="14" color="gray" @click="addToCart">加入购物车</sm-button>
-          <sm-button :width="120" :height="35" :size="14">立即购买</sm-button>
+          <sm-button :width="120" :height="35" :size="14" @click="gotoCheckout">立即购买</sm-button>
         </div>
       </div>
     </div>
@@ -215,6 +215,10 @@ export default {
     handleScroll() {
       this.fixed = this.el.clientHeight + this.el.scrollTop <= this.offsetTop;
     },
+    // 立即购买
+    gotoCheckout() {
+      this.$router.push({ name: 'Checkout', params: { products: [{ sku: this.sku, quantity: this.quantity }] } });
+    },
     // 添加到购物车
     addToCart() {
       this.$store.dispatch('user/addToCart', { sku: this.sku, quantity: this.quantity });
@@ -233,6 +237,9 @@ export default {
       this.animation = true;
       this.aniImg = this.sku.image;
       this.aniCount++;
+
+      // this.$message.success('加入购物车成功！');
+      // this.$notify.success({ title: '加入购物车成功！', content: `${this.sku.title}：${this.quantity}件` });
     },
     beforeEnter(el) {
       const elStyle = el.style;
@@ -501,15 +508,12 @@ export default {
           display: flex;
 
           .spec {
-            padding-right: 1rem;
-            margin-right: 1rem;
             color: var(--font-color-1);
-            border-right: var(--border);
 
-            &:last-child {
-              padding-right: 0;
-              margin-right: 0;
-              border-right: none;
+            &:not(:last-child) {
+              padding-right: 1rem;
+              margin-right: 1rem;
+              border-right: var(--border);
             }
           }
         }
