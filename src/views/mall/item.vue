@@ -391,11 +391,11 @@ export default {
 
         .line-dashed {
           margin-left: 15%;
-          border-top: 1px dashed var(--color-border);
+          border-top: var(--border-dashed);
         }
 
         .line-solid {
-          border-top: 1px solid var(--color-border);
+          border-top: var(--border);
         }
 
         .models {

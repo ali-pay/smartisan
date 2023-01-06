@@ -280,6 +280,7 @@ export default {
     // 提交订单
     submit() {
       console.log('submit');
+      this.$router.push({ name: 'Payment', params: { totalPayment: this.totalPayment } });
     },
     // 打开地址弹窗
     openAddressDialog(address) {
@@ -464,7 +465,7 @@ export default {
         padding: 1.5rem 0;
 
         &:not(:last-child) {
-          border-bottom: 1px dashed var(--color-border);
+          border-bottom: var(--border-dashed);
         }
 
         .left {
@@ -569,7 +570,7 @@ export default {
 
       .tip {
         padding-top: 2rem;
-        border-top: 1px dashed var(--color-border);
+        border-top: var(--border-dashed);
       }
     }
   }

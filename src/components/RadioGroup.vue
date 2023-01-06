@@ -9,7 +9,7 @@ export default {
   name: 'SmRadioGroup',
   props: {
     value: {
-      type: String,
+      type: [Number, String],
       default: null,
     },
   },

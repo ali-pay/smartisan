@@ -1,7 +1,8 @@
 <template>
   <div class="sm-radio" :class="cls" @click="handleClick">
     <i class="border" :style="borderSts"><i class="dot" :style="dotSts" /></i>
-    <span v-if="!hideTitle" :style="textSts">{{ title }}</span>
+    <span v-if="!hideTitle && !$slots.default" :style="textSts">{{ title }}</span>
+    <span v-else :style="textSts"><slot></slot></span>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
     hideTitle: Boolean,
     // 标题
     title: {
-      type: String,
+      type: [Number, String],
       default: null,
     },
     // 高度
@@ -102,7 +103,7 @@ export default {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  justify-content: center;
+  // justify-content: center;
   cursor: pointer;
 
   .border {

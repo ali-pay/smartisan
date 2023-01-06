@@ -2,9 +2,7 @@
   <div id="🛒" class="wrapper">
     <sm-box title="购物车">
       <div v-if="!products.length" class="empty">
-        <img
-          src="https://static.smartisanos.cn/index/assets/images/cart-empty@2x.f25b2c8c8168313d570820fe359998c5.png"
-        />
+        <img src="@/assets/images/cart/empty.png" />
         <p class="title">您的购物车中还没有商品</p>
         <sm-button :width="160" :height="50" :size="14" color="gray" to="/mall">现在选购</sm-button>
       </div>
@@ -252,7 +250,7 @@ export default {
     padding: 1.5rem 0;
 
     &:not(:last-child) {
-      border-bottom: 1px dashed var(--color-border);
+      border-bottom: var(--border-dashed);
     }
 
     .left {
