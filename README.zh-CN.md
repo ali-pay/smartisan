@@ -1,4 +1,4 @@
-<h1 align="center"><a href="https://github.com/ElanYoung/vite-vue2-js-starter-template" target="_blank">Vite 3 🚀 - Vue 2  Starter Template</a></h1>
+<h1 align="center"><a href="https://github.com/ali-pay/smartisan" target="_blank">Smartisan Mall</a></h1>
 
 <p align="center">
   <a href="https://nodejs.org/en/about/releases/">
@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/badge/vite-3.2.5-3963bc.svg" alt="vite" style="max-width:100%;" />
   </a>
   <a href="https://github.com/vuejs/vue">
-    <img src="https://img.shields.io/badge/vue-2.7.14-brightgreen.svg" alt="vue" />
+    <img src="https://img.shields.io/badge/vue-2.6.14-brightgreen.svg" alt="vue" />
   </a>
   <a href="https://github.com/vuejs/vue-router">
     <img src="https://img.shields.io/badge/vue--router-3.5.4-brightgreen.svg" alt="vue-router" />
@@ -16,11 +16,11 @@
   <a href="https://github.com/vuejs/vuex">
     <img src="https://img.shields.io/badge/vuex-3.6.2-brightgreen.svg" alt="vuex" />
   </a>
-  <a href="https://doc.starimmortal.com">
-    <img alt="author" src="https://img.shields.io/badge/author-ElanYoung-blue.svg" />
+  <a href="https://github.com/ali-pay">
+    <img alt="author" src="https://img.shields.io/badge/author-ali--pay-blue.svg" />
   </a>
-  <a href="https://github.com/ElanYoung/vite-vue2-js-starter-template/blob/master/LICENSE">
-    <img alt="LICENSE" src="https://img.shields.io/github/license/ElanYoung/vite-vue2-js-starter-template.svg" />
+  <a href="https://github.com/ali-pay/smartisan/blob/master/LICENSE">
+    <img alt="LICENSE" src="https://img.shields.io/github/license/ali-pay/smartisan.svg" />
   </a>
 </p>
 
@@ -29,7 +29,7 @@
 </p>
 
 <p align='center'>
-  <a href="https://elanyoung.github.io/vite-vue2-js-starter-template">在线 Demo</a>
+  <a href="https://ali-pay.github.io/smartisan">在线 Demo</a>
 </p>
 
 <p align="center">
@@ -68,11 +68,11 @@
 
 ## 现在可以试试！
 
-> Vite3 Vue2 JavaScript Starter Template 需要 Node 版本 >= 14.18
+> Smartisan Mall 需要 Node 版本 >= 14.18
 
 ### GitHub 模板
 
-[使用这个模板创建仓库](https://github.com/ElanYoung/vite-vue2-js-starter-template/generate).
+[使用这个模板创建仓库](https://github.com/ali-pay/smartisan/generate).
 
 ### 克隆到本地
 
@@ -83,10 +83,10 @@
 git config --global core.autocrlf input
 
 # 克隆
-git clone https://github.com/ElanYoung/vite-vue2-js-starter-template
+git clone https://github.com/ali-pay/smartisan
 
 # 打开文件夹
-cd vite-vue2-js-starter-template
+cd smartisan
 
 # 安装依赖
 npm i
@@ -132,4 +132,4 @@ npm run build
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2022 ElanYoung
+Copyright (c) 2023 ali-pay
