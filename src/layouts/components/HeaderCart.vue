@@ -24,11 +24,11 @@
                 </ul>
                 <div class="price">
                   <span class="price-icon">¥</span>
-                  <span class="price-num">{{ item.sku?.discount?.toFixed(2) || item.sku?.price?.toFixed(2) }}</span>
+                  <span class="price-num">{{ item.sku.price.toFixed(2) }}</span>
                   <span class="quantity">x {{ item.quantity }}</span>
                 </div>
               </div>
-              <i class="btn-delete" @click="deleteFromCart(item.sku.id)" />
+              <i class="btn-delete" @click="deleteFromCart(item.sku)" />
             </li>
           </transition-group>
           <div class="total">
@@ -51,23 +51,17 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'SmHeaderCart',
   computed: {
-    products() {
-      return this.$store.state.user.cart;
-    },
-    totalQuantity() {
-      return this.products.reduce((total, item) => total + item.quantity, 0);
-    },
-    totalPrice() {
-      return this.products.reduce((total, item) => total + item.quantity * (item.sku.discount || item.sku.price), 0);
-    },
+    ...mapGetters('cart', ['products', 'totalPrice', 'totalQuantity']),
   },
   methods: {
     // 从购物车删除
-    deleteFromCart(skuId) {
-      this.$store.dispatch('user/deleteFromCart', { skuIds: [skuId] });
+    deleteFromCart(sku) {
+      this.$store.dispatch('cart/deleteFromCart', [sku.id]);
     },
   },
 };

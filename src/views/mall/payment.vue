@@ -35,7 +35,7 @@
       </div>
       <div class="bar-wrapper">
         <div class="prices">
-          <span class="tip">合计：</span><span class="discount"><i>¥</i>{{ totalPayment.toFixed(2) }}</span>
+          <span class="tip">合计：</span><span class="price"><i>¥</i>{{ order.price.toFixed(2) }}</span>
         </div>
         <sm-button color="red" :width="120" :height="35" :size="14" @click="submit">立即支付</sm-button>
       </div>
@@ -54,8 +54,8 @@ export default {
     };
   },
   computed: {
-    totalPayment() {
-      return this.$route.params.totalPayment || 0;
+    order() {
+      return this.$route.params.order;
     },
     quotas() {
       return [
@@ -180,7 +180,7 @@ export default {
         color: var(--font-color-2);
       }
 
-      .discount {
+      .price {
         font-family: SmartisanMaquette;
         font-size: var(--font-size-xxxxl);
         font-weight: 900;

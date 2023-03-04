@@ -24,8 +24,8 @@
                 <p class="desc">{{ spu.desc }}</p>
               </div>
               <div class="prices">
-                <p class="discount"><i>¥</i>{{ sku?.discount?.toFixed(2) || sku?.price?.toFixed(2) }}</p>
-                <p v-if="sku.discount" class="price">原价：¥{{ sku?.price?.toFixed(2) }}</p>
+                <p class="price"><i>¥</i>{{ sku.price.toFixed(2) }}</p>
+                <p v-if="sku.cost !== sku.price" class="cost">原价：¥{{ sku.cost.toFixed(2) }}</p>
               </div>
             </div>
             <ul class="specs">
@@ -84,8 +84,8 @@
         </div>
         <div class="right">
           <div class="prices">
-            <p class="discount"><i>¥</i>{{ ((sku?.discount || sku?.price) * quantity).toFixed(2) }}</p>
-            <p v-if="sku.discount" class="price">原价：¥{{ (sku.price * quantity).toFixed(2) }}</p>
+            <p class="price"><i>¥</i>{{ (sku.price * quantity).toFixed(2) }}</p>
+            <p v-if="sku.cost !== sku.price" class="cost">原价：¥{{ (sku.cost * quantity).toFixed(2) }}</p>
           </div>
           <sm-button id="🛒" :width="120" :height="35" :size="14" color="gray" @click="addToCart">加入购物车</sm-button>
           <sm-button :width="120" :height="35" :size="14" @click="gotoCheckout">立即购买</sm-button>
@@ -221,7 +221,7 @@ export default {
     },
     // 添加到购物车
     addToCart() {
-      this.$store.dispatch('user/addToCart', { sku: this.sku, quantity: this.quantity });
+      this.$store.dispatch('cart/addToCart', { sku: this.sku, quantity: this.quantity });
 
       // 起点坐标
       const btnCart = document.querySelector('#🛒').getBoundingClientRect();
@@ -342,7 +342,7 @@ export default {
           font-family: SmartisanMaquette;
           text-align: right;
 
-          .discount {
+          .price {
             font-size: var(--font-size-xxxxl);
             font-weight: 900;
             color: var(--color-red);
@@ -353,7 +353,7 @@ export default {
             }
           }
 
-          .price {
+          .cost {
             color: var(--font-color-0);
             text-decoration: line-through;
           }
@@ -530,7 +530,7 @@ export default {
         font-family: SmartisanMaquette;
         text-align: right;
 
-        .discount {
+        .price {
           font-size: var(--font-size-xxxl);
           font-weight: 900;
           color: var(--color-red);
@@ -541,7 +541,7 @@ export default {
           }
         }
 
-        .price {
+        .cost {
           color: var(--font-color-0);
           text-decoration: line-through;
         }

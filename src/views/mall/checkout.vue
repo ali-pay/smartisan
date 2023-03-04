@@ -55,9 +55,9 @@
                 <div class="price">¥ {{ item.sku.price.toFixed(2) }}</div>
                 <div class="quantity">{{ item.quantity }}</div>
                 <div class="subtotal">
-                  <p>¥ {{ ((item.sku?.discount || item.sku?.price) * item.quantity).toFixed(2) }}</p>
-                  <p v-if="item.sku.discount" class="discount">
-                    已优惠 ¥{{ ((item.sku.price - item.sku.discount) * item.quantity).toFixed(2) }}
+                  <p>¥ {{ (item.sku.price * item.quantity).toFixed(2) }}</p>
+                  <p v-if="item.sku.cost !== item.sku.price" class="discount">
+                    已优惠 ¥{{ ((item.sku.cost - item.sku.price) * item.quantity).toFixed(2) }}
                   </p>
                 </div>
               </div>
@@ -108,7 +108,7 @@
         <div class="left">
           <div class="info">
             <p class="title">商品款数</p>
-            <p class="quantity">{{ skuQuantity }}</p>
+            <p class="quantity">{{ totalSKU }}</p>
           </div>
           <div class="info">
             <p class="title">商品件数</p>
@@ -116,7 +116,7 @@
           </div>
           <div class="info">
             <p class="title">商品总价</p>
-            <p class="price">¥ {{ totalPrice.toFixed(2) }}</p>
+            <p class="price">¥ {{ totalCost.toFixed(2) }}</p>
           </div>
           <div class="info">
             <p class="title">活动优惠</p>
@@ -133,7 +133,7 @@
         </div>
         <div class="right">
           <div class="prices">
-            <span class="tip">合计：</span><span class="discount"><i>¥</i>{{ totalPayment.toFixed(2) }}</span>
+            <span class="tip">合计：</span><span class="price"><i>¥</i>{{ totalPrice.toFixed(2) }}</span>
           </div>
           <sm-button :width="120" :height="35" :size="14" @click="submit">提交订单</sm-button>
         </div>
@@ -161,6 +161,7 @@
 
 <script>
 import _ from 'lodash';
+import dayjs from 'dayjs';
 import pcas from '@/assets/json/pcas-code.json';
 
 export default {
@@ -189,13 +190,13 @@ export default {
       return pcas;
     },
     addresses() {
-      return _.cloneDeep(this.$store.state.user.info.addresses);
+      return this.$store.state.address.addresses;
     },
     products() {
-      return this.$route.params.products || this.$store.state.user.cart;
+      return this.$route.params.products || this.$store.state.cart.products;
     },
     // 商品款数
-    skuQuantity() {
+    totalSKU() {
       return this.products.length;
     },
     // 商品件数
@@ -203,13 +204,12 @@ export default {
       return this.products.reduce((total, item) => total + item.quantity, 0);
     },
     // 商品总价
-    totalPrice() {
-      return this.products.reduce((total, item) => total + item.quantity * item.sku.price, 0);
+    totalCost() {
+      return this.products.reduce((total, item) => total + item.quantity * item.sku.cost, 0);
     },
     // 活动优惠
     totalDiscount() {
-      const products = this.products.filter((item) => item.sku.discount);
-      return products.reduce((total, item) => total + item.quantity * (item.sku.price - item.sku.discount), 0);
+      return this.products.reduce((total, item) => total + item.quantity * (item.sku.cost - item.sku.price), 0);
     },
     // 优惠券抵扣
     totalCoupon() {
@@ -220,8 +220,8 @@ export default {
       return _.random(20, true);
     },
     // 合计
-    totalPayment() {
-      return this.totalPrice - this.totalDiscount - this.totalCoupon + this.totalFedex;
+    totalPrice() {
+      return this.totalCost - this.totalDiscount - this.totalCoupon + this.totalFedex;
     },
   },
   watch: {
@@ -279,8 +279,26 @@ export default {
     },
     // 提交订单
     submit() {
-      console.log('submit');
-      this.$router.push({ name: 'Payment', params: { totalPayment: this.totalPayment } });
+      const order = {
+        id: _.uniqueId(),
+        datetime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        products: this.products,
+        address: this.address,
+        invoice: this.invoice,
+        cost: this.totalCost,
+        price: this.totalPrice,
+        fedex: this.totalFedex,
+        status: '未付款',
+      };
+      // 剔除掉购物车中的商品
+      this.$store.dispatch(
+        'cart/deleteFromCart',
+        this.products.map((item) => item.sku.id),
+      );
+      // 创建订单
+      this.$store.dispatch('order/createOrder', order);
+      // 跳转支付页面
+      this.$router.push({ name: 'Payment', params: { order } });
     },
     // 打开地址弹窗
     openAddressDialog(address) {
@@ -305,17 +323,17 @@ export default {
       this.addressDialogVisible = false;
       // 有id，是修改地址
       if (this.address.id) {
-        this.$store.dispatch('user/updateAddress', this.address);
+        this.$store.dispatch('address/updateAddress', this.address);
         return;
       }
       // 没有则是新建
       this.address.id = this.addresses.length + 1;
-      this.$store.dispatch('user/addToAddresses', this.address);
+      this.$store.dispatch('address/createAddress', this.address);
     },
     // 删除地址
     deleteAddress(address) {
       this.$danger('警告', '确认删除？').then(() => {
-        this.$store.dispatch('user/deleteFromAddresses', address);
+        this.$store.dispatch('address/deleteAddress', address);
       });
     },
   },
@@ -427,15 +445,14 @@ export default {
   .shoplist-box {
     .left {
       display: flex;
+      gap: 2rem;
       align-items: center;
-      justify-content: center;
       margin-left: 3rem;
     }
 
     .right {
       display: flex;
       align-items: center;
-      justify-content: center;
       margin-right: 3rem;
     }
 
@@ -472,7 +489,6 @@ export default {
           img {
             width: 6.5rem;
             height: 6.5rem;
-            margin-right: 2rem;
             border: 1px solid var(--color-gray);
             border-radius: var(--radius);
           }
@@ -668,7 +684,7 @@ export default {
           color: var(--font-color-2);
         }
 
-        .discount {
+        .price {
           font-family: SmartisanMaquette;
           font-size: var(--font-size-xxxxl);
           font-weight: 900;

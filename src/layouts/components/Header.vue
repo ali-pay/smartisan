@@ -28,24 +28,12 @@
               </div>
               <p class="nickname">{{ user.nickname }}</p>
               <ul>
-                <router-link tag="li" to="/mall/user/order" class="order">
-                  <t-icon name="bulletpoint" />我的订单
-                </router-link>
-                <router-link tag="li" to="/mall/user/support" class="support">
-                  <t-icon name="chat" />售后服务
-                </router-link>
-                <router-link tag="li" to="/mall/user/coupon" class="coupon">
-                  <t-icon name="discount" />我的优惠
-                </router-link>
-                <router-link tag="li" to="/mall/user/information" class="information">
-                  <t-icon name="user" />账户资料
-                </router-link>
-                <router-link tag="li" to="/mall/user/address" class="address">
-                  <t-icon name="location" />收货地址
-                </router-link>
-                <router-link tag="li" to="/mall/user/logout" class="logout">
-                  <t-icon name="close-circle" />退出
-                </router-link>
+                <router-link tag="li" to="/mall/user/order"> <t-icon name="bulletpoint" />我的订单 </router-link>
+                <router-link tag="li" to="/mall/user/support"> <t-icon name="chat" />售后服务 </router-link>
+                <router-link tag="li" to="/mall/user/coupon"> <t-icon name="discount" />我的优惠 </router-link>
+                <router-link tag="li" to="/mall/user/information"> <t-icon name="user" />账户资料 </router-link>
+                <router-link tag="li" to="/mall/user/address"> <t-icon name="location" />收货地址 </router-link>
+                <router-link tag="li" to="/mall/user/logout"> <t-icon name="close-circle" />退出 </router-link>
               </ul>
             </div>
           </div>

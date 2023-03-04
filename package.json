@@ -29,6 +29,7 @@
   "dependencies": {
     "async-validator": "^4.2.5",
     "axios": "^1.2.2",
+    "dayjs": "^1.11.7",
     "lodash": "^4.17.21",
     "tdesign-vue": "^1.0.3",
     "vue": "~2.6.14",

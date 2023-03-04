@@ -129,6 +129,7 @@ export default {
         if (!this.lockScroll) return;
         // 隐藏滚动条并设置页面边距避免页面抖动
         if (val) {
+          if (document.body.scrollHeight >= document.body.clientHeight) return;
           document.body.style.overflow = 'hidden';
           document.body.style.marginRight = `${this.scrollBarWidth}px`;
           const els = document.querySelectorAll('.fixed');

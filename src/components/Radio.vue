@@ -1,6 +1,6 @@
 <template>
   <div class="sm-radio" :class="cls" @click="handleClick">
-    <i class="border" :style="borderSts"><i class="dot" :style="dotSts" /></i>
+    <i />
     <span v-if="!hideTitle && !$slots.default" :style="textSts">{{ title }}</span>
     <span v-else :style="textSts"><slot></slot></span>
   </div>
@@ -48,22 +48,6 @@ export default {
       if (this.checked) temp.push('active');
       return temp;
     },
-    borderSts() {
-      const temp = {};
-      if (this.height) {
-        temp.width = `${this.height}px`;
-        temp.height = `${this.height}px`;
-      }
-      return temp;
-    },
-    dotSts() {
-      const temp = {};
-      if (this.height) {
-        temp.width = `${this.height * 0.53}px`;
-        temp.height = `${this.height * 0.53}px`;
-      }
-      return temp;
-    },
     textSts() {
       const temp = {};
       if (this.size) temp.fontSize = `${this.size}px`;
@@ -104,32 +88,20 @@ export default {
   gap: 0.5rem;
   align-items: center;
   // justify-content: center;
+  height: 1rem;
   cursor: pointer;
 
-  .border {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: var(--border);
-    border-radius: 50%;
-    box-shadow: inset 0 2px 4px rgb(0 0 0 / 5%);
+  i {
+    width: 2rem;
+    height: 2rem;
+    background-image: url('@/assets/images/components/radio.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 
-  .dot {
-    display: none;
-    width: 0.8rem;
-    height: 0.8rem;
-    background: #6c94f3;
-    background: linear-gradient(#749af4, #668ef2);
-    border: 1px solid #5d81d9;
-    border-radius: 50%;
-    box-shadow: 0 1px 2px rgb(0 0 0 / 20%);
-  }
-
-  &.active .dot {
-    display: block;
+  &.active i {
+    background-image: url('@/assets/images/components/radio-active.png');
   }
 }
 </style>

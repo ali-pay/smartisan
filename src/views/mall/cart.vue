@@ -40,12 +40,12 @@
                     <sm-input-number v-model="item.quantity" @minus="handleMinus(item)" @plus="handlePlus(item)" />
                   </div>
                   <div class="subtotal">
-                    <p>¥ {{ ((item.sku?.discount || item.sku?.price) * item.quantity).toFixed(2) }}</p>
-                    <p v-if="item.sku.discount" class="discount">
-                      已优惠 ¥{{ ((item.sku.price - item.sku.discount) * item.quantity).toFixed(2) }}
+                    <p>¥ {{ (item.sku.price * item.quantity).toFixed(2) }}</p>
+                    <p v-if="item.sku.cost !== item.sku.price" class="discount">
+                      已优惠 ¥{{ ((item.sku.cost - item.sku.price) * item.quantity).toFixed(2) }}
                     </p>
                   </div>
-                  <div class="operation"><i class="btn-delete" @click="deleteFromCart(item.sku.id)" /></div>
+                  <div class="operation"><i class="btn-delete" @click="deleteFromCart(item.sku)" /></div>
                 </div>
               </li>
             </transition-group>
@@ -60,7 +60,7 @@
             <div class="total-quantity">
               <p>
                 已选中
-                <span class="red">{{ skuQuantity }}</span>
+                <span class="red">{{ totalSKU }}</span>
                 款商品
               </p>
               <p>
@@ -86,8 +86,6 @@
 </template>
 
 <script>
-import _ from 'lodash';
-
 export default {
   name: 'Cart',
   data() {
@@ -103,13 +101,13 @@ export default {
   },
   computed: {
     products() {
-      return _.cloneDeep(this.$store.state.user.cart);
+      return this.$store.state.cart.products;
     },
-    // 总款数
-    skuQuantity() {
+    // 商品款数
+    totalSKU() {
       return this.selSkus.length;
     },
-    // 总件数
+    // 商品件数
     totalQuantity() {
       const products = this.products.filter((item) => this.selSkus.includes(item.sku.id));
       return products.reduce((total, item) => total + item.quantity, 0);
@@ -117,12 +115,12 @@ export default {
     // 应付总额
     totalPrice() {
       const products = this.products.filter((item) => this.selSkus.includes(item.sku.id));
-      return products.reduce((total, item) => total + item.quantity * (item.sku.discount || item.sku.price), 0);
+      return products.reduce((total, item) => total + item.quantity * item.sku.price, 0);
     },
     // 优惠总额
     totalDiscount() {
-      const products = this.products.filter((item) => this.selSkus.includes(item.sku.id) && item.sku.discount);
-      return products.reduce((total, item) => total + item.quantity * (item.sku.price - item.sku.discount), 0);
+      const products = this.products.filter((item) => this.selSkus.includes(item.sku.id));
+      return products.reduce((total, item) => total + item.quantity * (item.sku.cost - item.sku.price), 0);
     },
   },
   watch: {
@@ -149,19 +147,18 @@ export default {
     },
     // 减少数量
     handleMinus(item) {
-      this.$store.dispatch('user/addToCart', { sku: item.sku, quantity: -1 });
+      this.$store.dispatch('cart/addToCart', { sku: item.sku, quantity: -1 });
     },
     // 增加数量
     handlePlus(item) {
-      this.$store.dispatch('user/addToCart', { sku: item.sku, quantity: 1 });
+      this.$store.dispatch('cart/addToCart', { sku: item.sku, quantity: 1 });
     },
     // 从购物车删除
-    deleteFromCart(skuId) {
-      let skuIds = [];
-      if (skuId) skuIds.push(skuId);
-      else skuIds = this.selSkus;
-      this.$store.dispatch('user/deleteFromCart', { skuIds });
-      this.selSkus = this.selSkus.filter((item) => !skuIds.includes(item));
+    deleteFromCart(sku) {
+      let ids = this.selSkus;
+      if (sku) ids = [sku.id];
+      this.$store.dispatch('cart/deleteFromCart', ids);
+      this.selSkus = this.selSkus.filter((item) => !ids.includes(item));
     },
     // 滚动事件
     handleScroll() {
@@ -206,15 +203,14 @@ export default {
 
 .left {
   display: flex;
+  gap: 2rem;
   align-items: center;
-  justify-content: center;
   margin-left: 3rem;
 }
 
 .right {
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-right: 3rem;
 }
 
@@ -257,7 +253,6 @@ export default {
       img {
         width: 6.5rem;
         height: 6.5rem;
-        margin: 0 2rem;
         border: 1px solid var(--color-gray);
         border-radius: var(--radius);
       }

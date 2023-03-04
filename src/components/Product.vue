@@ -13,8 +13,8 @@
       </li>
     </ul>
     <p class="prices">
-      <span class="discount"><i>¥</i>{{ sku?.discount?.toFixed(2) || sku?.price?.toFixed(2) }}</span>
-      <span v-if="sku.discount" class="price">¥{{ sku?.price?.toFixed(2) }}</span>
+      <span class="price"><i>¥</i>{{ sku.price.toFixed(2) }}</span>
+      <span v-if="sku.cost !== sku.price" class="cost">¥{{ sku.cost.toFixed(2) }}</span>
     </p>
   </router-link>
 </template>
@@ -120,7 +120,7 @@ export default {
     margin-top: 1.5rem;
     font-family: SmartisanMaquette;
 
-    .discount {
+    .price {
       font-size: var(--font-size-xxl);
       font-weight: 900;
       color: var(--color-red);
@@ -131,7 +131,7 @@ export default {
       }
     }
 
-    .price {
+    .cost {
       margin-left: 0.5rem;
       color: var(--font-color-0);
       text-decoration: line-through;

@@ -5,6 +5,7 @@ export const spu = {
   id: '1000406',
   title: '坚果 3',
   desc: '漂亮得不像实力派',
+  cost: 1299,
   price: 1299,
   quantity: 100,
   image_pc: 'https://resource.smartisan.com/resource/d5a1453ad115e15bd79579e8bdb20ba0.jpg',
@@ -35,7 +36,7 @@ export const black432 = _.defaultsDeep(
       { key: '颜色', value: '碳黑色', hex: '#161111' },
       { key: '容量', value: '4G + 32GB' },
     ],
-    discount: 999,
+    price: 999,
   },
   spu,
 );
@@ -68,7 +69,7 @@ export const red432 = _.defaultsDeep(
       { key: '颜色', value: '酒红色', hex: '#ad4147' },
       { key: '容量', value: '4G + 32GB' },
     ],
-    discount: 999,
+    price: 999,
   },
   spu,
 );
@@ -101,7 +102,7 @@ export const gold432 = _.defaultsDeep(
       { key: '颜色', value: '浅金色', hex: '#e7e6df' },
       { key: '容量', value: '4G + 32GB' },
     ],
-    discount: 999,
+    price: 999,
   },
   spu,
 );
